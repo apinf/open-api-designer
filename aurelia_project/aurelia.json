@@ -91,6 +91,12 @@
           "node_modules/requirejs/require.js"
         ],
         "dependencies": [
+          {
+            "name": "babel-polyfill",
+            "main": "dist/polyfill.js",
+            "path": "../node_modules/babel-polyfill",
+            "resources": []
+          },
           "aurelia-binding",
           "aurelia-bootstrapper",
           "aurelia-dependency-injection",

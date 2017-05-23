@@ -1,11 +1,5 @@
+import 'babel-polyfill';
 import environment from './environment';
-
-//Configure Bluebird Promises.
-Promise.config({
-  warnings: {
-    wForgottenReturn: false
-  }
-});
 
 export function configure(aurelia) {
   aurelia.use
