@@ -13,7 +13,9 @@
     "fileExtension": ".js",
     "options": {
       "plugins": [
-        "transform-es2015-modules-amd"
+        "transform-es2015-modules-amd",
+        "transform-decorators-legacy",
+        "transform-es2017-object-entries"
       ]
     },
     "source": "src/**/*.js"
