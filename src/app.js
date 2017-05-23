@@ -1,5 +1,6 @@
 import {parseJSON} from './resources/jsonparser';
 import {schema} from './schemas/index';
+import YAML from 'yamljs';
 
 export class App {
   constructor() {
@@ -29,23 +30,29 @@ export class App {
     let data;
     if (type === 'json') {
       data = this.json;
-    } else if (type === 'yml') {
-      data = 'yaml-support-implemented: false';
+    } else if (type === 'yaml') {
+      data = this.yaml;
     } else {
       return;
     }
 
     // Add an anchor element that has the data as the href attribute, then click
     // the element to download the data.
-    const str = `data:text/json;charset=utf-8,${data}`;
-    const downloadLink = document.createElement('a');
-    downloadLink.setAttribute('href', str);
-    downloadLink.setAttribute('download', `swagger.${type}`);
-    downloadLink.innerHTML = 'Download Open API specification file';
-    downloadLink.hidden = true;
-    document.body.appendChild(downloadLink);
-    downloadLink.click();
-    downloadLink.remove();
+    const blob = new Blob([data], {type: 'text/json'});
+    if (window.navigator.msSaveOrOpenBlob) {
+      window.navigator.msSaveBlob(blob, filename);
+    } else {
+      const downloadLink = document.createElement('a');
+      downloadLink.href = window.URL.createObjectURL(blob);
+      downloadLink.download = `swagger.${type}`;
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+      document.body.removeChild(downloadLink);
+    }
+  }
+
+  get yaml() {
+    return YAML.stringify(this.forms.getValue(), 10, 2);
   }
 
   get json() {
