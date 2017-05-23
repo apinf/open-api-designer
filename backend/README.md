@@ -3,8 +3,17 @@
 Backend for open-api-designer. Be sure to also check requirements.txt
 
 ## How to run 
+**note**
+The documentation is for linux, and is only tested on linux. All commands are for linux.
 
-Make sure you have main.db in same directory and be sure it has correct right. In linux, you can do this by running:
+### requirements
+You should only need to install Flask-SQLAlchemy package. It will install all the needed depencencies.
+You can install Flask-SQLAlchemy with pip: 
+
+```pip3 install Flask-SQLAlchemy```
+
+Make sure you have main.db in same directory and be sure it has correct right. You can do this by running
+
 ```
 touch main.db
 chmod 700 main.db
