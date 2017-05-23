@@ -40,7 +40,7 @@ export class App {
     // the element to download the data.
     const blob = new Blob([data], {type: 'text/json'});
     if (window.navigator.msSaveOrOpenBlob) {
-      window.navigator.msSaveBlob(blob, filename);
+      window.navigator.msSaveBlob(blob, `swagger.${type}`);
     } else {
       const downloadLink = document.createElement('a');
       downloadLink.href = window.URL.createObjectURL(blob);
