@@ -13,15 +13,22 @@ export class Arrayfield extends Parentfield {
    */
   item;
   /**
-   * Whether or not the UI element should be collapsed (i.e. only show the title)
-   * @type {Boolean}
-   */
-  collapsed = false;
-  /**
    * The field that is used as the key if {@link #format} is {@linkplain map}
    * @type {String}
    */
   keyField = '_key';
+  /**
+   * Whether or not to add {@linkplain #<index>} to the end of the labels of
+   * children.
+   * @type {Boolean}
+   */
+  addIndexToChildLabel = true;
+  /**
+   * Whether or not to automatically collapse other fields when uncollapsing a
+   * field.
+   * @type {Boolean}
+   */
+  collapseManagement = false;
   /** @inheritdoc */
   _children = [];
 
@@ -35,9 +42,11 @@ export class Arrayfield extends Parentfield {
    *                                   collapsed.
    */
   init(id = '', args = {}) {
-    args = Object.assign({format: 'array', keyField: '_key', collapsed: false}, args);
+    args = Object.assign({format: 'array', keyField: '_key', addIndexToChildLabel: true, collapseManagement: false, collapsed: false}, args);
     this.item = args.item;
     this.keyField = args.keyField;
+    this.addIndexToChildLabel = args.addIndexToChildLabel;
+    this.collapseManagement = args.collapseManagement;
     this.collapsed = args.collapsed;
     return super.init(id, args);
   }
@@ -72,6 +81,16 @@ export class Arrayfield extends Parentfield {
     return value;
   }
 
+  childCollapseChanged(field, isNowCollapsed) {
+    if (!isNowCollapsed && this.collapseManagement) {
+      for (const child of this._children) {
+        if (child !== field) {
+          child.setCollapsed(true);
+        }
+      }
+    }
+  }
+
   /**
    * @inheritdoc
    * @param {Object|Object[]} value The new value in the format specified by
@@ -96,11 +115,16 @@ export class Arrayfield extends Parentfield {
       return;
     }
 
-    const field = this.item.clone();
+    const field = this.item.clone(this);
     field.index = this._children.length;
     field.id = `${this.item.id}-${field.index}`;
-    field.labelFormat = `${field.labelFormat} #$index`;
+    if (this.addIndexToChildLabel) {
+      field.labelFormat = `${field.labelFormat} #$index`;
+    }
     this._children.push(field);
+    if (this.collapseManagement) {
+      field.setCollapsed(false);
+    }
     return field.index;
   }
 
@@ -119,14 +143,16 @@ export class Arrayfield extends Parentfield {
     for (let i = index; i < this._children.length; i++) {
       const item = this._children[i];
       item.index = i;
-      //item.label = `${this.item.label} #${(i + 1)}`;
     }
   }
 
   /** @inheritdoc */
-  clone() {
+  clone(parent) {
     const clone = new Arrayfield();
     clone.init(this.id, this);
+    if (parent) {
+      clone.parent = parent;
+    }
     if (this.item instanceof Field) {
       clone.item = this.item.clone();
     }

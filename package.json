@@ -1,7 +1,7 @@
 {
   "name": "open-api-designer",
-  "description": "An Aurelia client application.",
-  "version": "0.1.0",
+  "description": "A design interface for creating Open API (Swagger) specification files.",
+  "version": "0.3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/apinf/open-api-designer.git"

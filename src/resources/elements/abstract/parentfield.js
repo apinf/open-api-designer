@@ -9,6 +9,25 @@ export class Parentfield extends Field {
    * @private
    */
   _children;
+  /**
+   * Whether or not the UI element should be collapsed (i.e. only show the title)
+   * @type {Boolean}
+   */
+  collapsed = false;
+  isCollapsible = true;
+
+  childCollapseChanged(field, isNowCollapsed) {}
+
+  toggleCollapse() {
+    this.setCollapsed(!this.collapsed);
+  }
+
+  setCollapsed(collapsed) {
+    this.collapsed = collapsed;
+    if (this.parent) {
+      this.parent.childCollapseChanged(this, this.collapsed);
+    }
+  }
 
   /**
    * Get the children of this field as an array.

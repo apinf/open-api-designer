@@ -1,6 +1,11 @@
 <template>
   <div class="text field c${columns} columns" if.bind="display">
-    <label for.bind="id" textcontent.bind="label"></label>
+    <label for.bind="id">
+      ${label}
+      <tooltip if.bind="helpText" text.bind="helpText">
+        <img src="res/info.svg" alt="Info"/>
+      </tooltip>
+    </label>
     <input type="text" id.bind="id" value.bind="value" placeholder.bind="placeholder">
   </div>
 </template>

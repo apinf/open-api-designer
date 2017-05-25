@@ -1,6 +1,11 @@
 <template>
   <div class="array field c${columns} columns" if.bind="display">
-    <h3 class="title" textcontent.bind="label"></h3>
+    <h3 click.delegate="toggleCollapse()" class="title">
+      ${label}
+      <tooltip if.bind="helpText" text.bind="helpText">
+        <img src="res/info.svg" alt="Info"/>
+      </tooltip>
+    </h3>
     <div class="controls" if.bind="!collapsed">
       <button class="new-item" click.delegate="addChild()">
         New ${item.label}
@@ -9,9 +14,15 @@
     <div class="items" if.bind="!collapsed">
       <template repeat.for="childElem of iterableChildren">
         <div class="item c${childElem.columns} columns">
-          <button class="delete-button" click.delegate="childElem.delete()">
-            <img src="res/delete.svg" alt="Delete"/>
-          </button>
+          <div class="controls">
+            <button class="delete-button" click.delegate="childElem.delete()">
+              <img src="res/delete.svg" alt="Delete"/>
+            </button>
+            <button class="collapse-button" if.bind="childElem.isCollapsible" click.delegate="childElem.toggleCollapse()">
+              <img src="res/collapse-open.svg" alt="Collapse" if.bind="!childElem.collapsed"/>
+              <img src="res/collapse-closed.svg" alt="Collapse" if.bind="childElem.collapsed"/>
+            </button>
+          </div>
           <div class="actualItem">
             <compose containerless view-model.bind="childElem"></compose>
           </div>

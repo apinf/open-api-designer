@@ -1,3 +1,5 @@
+@import "tooltip";
+
 $main-color: #FFC107;
 $dark-color: darken($main-color, 5%);
 $border-color: #DBDBDB;
@@ -70,6 +72,10 @@ h3 {
 
     font-size: .875rem;
     font-weight: bold;
+
+    > tooltip {
+      height: 0.8rem;
+    }
   }
 
   label, .title {
@@ -82,6 +88,17 @@ h3 {
     margin: 0;
     margin-bottom: .5rem;
     margin-left: .25rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+
+
+    > tooltip {
+      width: auto;
+      height: 1.2rem;
+    }
   }
 
   &.dropdown.option {
@@ -188,22 +205,31 @@ h3 {
     }
   }
 
-  &.type > legend {
-    select + input {
-      margin-left: .5rem;
-      padding: .2rem;
+  &.type {
+    .object.field, .array.field, .type.field {
+      margin: 0;
+      padding: 0;
 
-      border: .0625rem solid $border-color;
-      border-radius: .25rem;
+      border: none;
+    }
 
-      &:hover {
-        border-bottom: .0625rem solid $main-color;
-      }
+    > legend {
+      select + input {
+        margin-left: .5rem;
+        padding: .2rem;
 
-      &:focus {
-        margin-bottom: 0;
+        border: .0625rem solid $border-color;
+        border-radius: .25rem;
 
-        border-bottom: .125rem solid $main-color;
+        &:hover {
+          border-bottom: .0625rem solid $main-color;
+        }
+
+        &:focus {
+          margin-bottom: 0;
+
+          border-bottom: .125rem solid $main-color;
+        }
       }
     }
   }
@@ -230,28 +256,44 @@ h3 {
       > .item {
         display: inline-block;
 
-        > .delete-button {
-          display: inline-block;
+        > .controls {
+          float: left;
 
-          cursor: pointer;
-          transform: translateY(50%);
+          width: 2.5rem;
 
-          border: none;
-          background: none;
+          transform: translateY(-1rem);
 
-          > img {
+          > .delete-button, > .collapse-button {
+            display: inline-block;
+
+            cursor: pointer;
+            transform: translateY(50%);
+
+            border: none;
+            background: none;
+
+            > img {
+              opacity: .2;
+            }
+          }
+
+          > .delete-button > img {
             width: 1rem;
             height: 1rem;
+            padding: .25rem;
+          }
 
-            opacity: .2;
+          > .collapse-button > img {
+            width: 1.5rem;
+            height: 1.5rem;
           }
         }
 
-
         > .actualItem {
           display: inline-block;
+          float: right;
 
-          width: calc(100% - 2rem);
+          width: calc(100% - 2.5rem);
 
           > .field {
             width: 100%;

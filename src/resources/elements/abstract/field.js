@@ -19,6 +19,11 @@ export class Field {
    * @private
    */
   _label = '';
+  /**
+   * The text to show in a popup when the user hovers over an info button.
+   * @type {String}
+   */
+  helpText = '';
   formatLabel = false;
   internationalizeLabel = false;
   /**
@@ -49,6 +54,13 @@ export class Field {
    * @type {Boolean}
    */
   showValueInParent = true
+  /**
+   * Whether or not this field has the field {@link #collapsed} and the method
+   * {@link #toggleCollapse()}
+   *
+   * @type {Boolean}
+   */
+  isCollapsible = false
 
   /**
    * Initialize this field with the base data.
@@ -56,8 +68,9 @@ export class Field {
    * @param  {String} [args.label]      The label of this field.
    * @param  {Number} [args.columns=8]  The number of columns this field should
    *                                    use.
-   * @param  {Number} [args.format]     The output and/or display format of the
+   * @param  {String} [args.format]     The output and/or display format of the
    *                                    field.
+   * @param  {String} [args.helpText]   The help text describing this field.
    * @param  {Field}  [args.parent]     The parent of this field.
    * @param  {Number} [args.index]      The numerical index of this field within
    *                                    the parent.
@@ -72,11 +85,13 @@ export class Field {
       label: id.substr(0, 1).toUpperCase() + id.substr(1),
       columns: 8,
       format: '',
+      helpText: '',
       conditions: {},
       showValueInParent: true
     }, args);
     this.id = id;
     this.format = args.format;
+    this.helpText = args.helpText;
     this.labelFormat = args.label || args._label;
     this.conditions = args.conditions;
     this.columns = args.columns;
@@ -212,7 +227,7 @@ export class Field {
    */
   delete() {
     if (this.parent) {
-      this.parent.deleteChild(this.index || this.id);
+      this.parent.deleteChild(typeof this.index === 'number' ? this.index : this.id);
     }
   }
 
@@ -235,12 +250,16 @@ export class Field {
   /**
    * Clone this field.
    *
+   * @param {Field} parent The new parent of this field.
    * @return {Field} A deep clone of this field.
    */
-  clone() {
+  clone(parent) {
     const ExtendedClass = Object.getPrototypeOf(this).constructor;
     const clone = new ExtendedClass();
     clone.init(this.id, this);
+    if (parent) {
+      clone.parent = parent;
+    }
     return clone;
   }
 }

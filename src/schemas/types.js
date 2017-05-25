@@ -3,9 +3,11 @@ export const types = {
   'format': 'map',
   'keyField': 'name',
   'showValueInParent': false,
+  'addIndexToChildLabel': false,
+  'collapseManagement': true,
   'item': {
     'type': 'object',
-    'label': 'Type',
+    'label': 'Type ${#/name}',
     'legendChildren': {
       'type': {
         'type': 'option',

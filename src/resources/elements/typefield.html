@@ -6,7 +6,12 @@
       </select>
       <input type="text" if.bind="keyKey" value.bind="key" placeholder.bind="keyPlaceholder">
     </legend>
-    <h3 class="title" textcontent.bind="label"></h3>
+    <h3 class="title">
+      ${label}
+      <tooltip if.bind="helpText" text.bind="helpText">
+        <img src="res/info.svg" alt="Info"/>
+      </tooltip>
+    </h3>
     <compose containerless view-model.bind="child"></compose>
   </fieldset>
 </template>

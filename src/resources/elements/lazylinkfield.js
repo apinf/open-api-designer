@@ -24,8 +24,7 @@ export class LazyLinkfield extends Field {
    * This doesn't return anything, since it just sets the {@link #child} field.
    */
   createChild() {
-    this.child = this.resolveRef(this.target).clone();
-    this.child.parent = this;
+    this.child = this.resolveRef(this.target).clone(this);
     for (const [field, value] of Object.entries(this.overrides)) {
       let target;
       let fieldPath;

@@ -7,6 +7,9 @@ export class App {
     window.$oai = this;
 
     this.forms = parseJSON('swagger', schema);
+    if (window.localStorage.cachedForm) {
+      this.forms.setValue(JSON.parse(window.localStorage.cachedForm));
+    }
 
     this.activeForm = this.forms.getChild('header');
     this.activeForm.show = true;
@@ -46,6 +49,8 @@ export class App {
   }
 
   get json() {
-    return JSON.stringify(this.forms.getValue(), '', '  ');
+    const data = JSON.stringify(this.forms.getValue(), '', '  ');
+    window.localStorage.cachedForm = data;
+    return data;
   }
 }
