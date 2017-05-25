@@ -66,4 +66,9 @@ export class App {
     window.localStorage.cachedForm = data;
     return data;
   }
+
+  get currentFormJSON() {
+    const data = JSON.stringify(this.activeForm.getValue(), '', '  ');
+    return data;
+  }
 }
