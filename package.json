@@ -12,6 +12,7 @@
     "aurelia-bootstrapper": "^1.0.0",
     "babel-polyfill": "^6.23.0",
     "bluebird": "^3.4.1",
+    "jquery": "^3.2.1",
     "requirejs": "^2.3.2",
     "text": "github:requirejs/text#latest",
     "yamljs": "^0.2.10"

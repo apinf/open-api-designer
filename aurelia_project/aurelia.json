@@ -119,6 +119,7 @@
           "aurelia-templating",
           "aurelia-templating-binding",
           "text",
+          "jquery",
           {
             "name": "yamljs",
             "path": "../node_modules/yamljs",

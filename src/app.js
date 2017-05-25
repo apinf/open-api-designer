@@ -1,6 +1,7 @@
 import {parseJSON} from './resources/jsonparser';
 import {schema} from './schemas/index';
 import YAML from 'yamljs';
+import $ from 'jquery';
 
 export class App {
   constructor() {
@@ -16,13 +17,18 @@ export class App {
     this.activeForm.show = true;
 
     window.onhashchange = () => {
-      const formID = window.location.hash.substr(2);
+      const formID = window.location.hash.substr(2) || 'header';
       if (this.forms.hasChild(formID)) {
         this.activeForm.show = false;
         this.activeForm = this.forms.getChild(formID);
         this.activeForm.show = true;
+        $('.nav > .nav-link.open').removeClass('open');
+        $(`#nav-${formID}`).addClass('open');
       }
     };
+  }
+
+  attached() {
     window.onhashchange();
   }
 

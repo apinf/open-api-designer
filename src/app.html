@@ -1,25 +1,45 @@
 <template>
   <require from="style/index.css"></require>
 
-  <div class="nav">
-    <a href="#/header">Header</a>
-    <a href="#/mime">MIME types</a>
-    <a href="#/security">Security</a>
-    <a href="#/tags">Tags</a>
-    <a href="#/paths">Paths</a>
-    <a href="#/types">Types</a>
-    <a href="javascript:void(0)" click.delegate="download('json')">
-      Download (JSON)
-    </a>
-    <a href="javascript:void(0)" click.delegate="download('yaml')">
-      Download (YAML)
-    </a>
+  <div class="brand-header">
+    <img class="logo" src="https://placehold.it/400x56"/>
+    <div class="right">
+      <a href="https://example.com">
+        <img class="info" src="https://placehold.it/48x48"/>
+      </a>
+      <a href="https://github.com/apinf/open-api-designer">
+        <img class="github" src="https://placehold.it/48x48"/>
+      </a>
+    </div>
   </div>
 
-  <a href="https://github.com/apinf/open-api-designer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>
+  <div class="nav">
+    <a class="nav-link" id="nav-about" href="#/about">About</a>
+    <a class="nav-link open" id="nav-header" href="#/header">Header</a>
+    <a class="nav-link" id="nav-mime" href="#/mime">MIME types</a>
+    <a class="nav-link" id="nav-security" href="#/security">Security</a>
+    <a class="nav-link" id="nav-tags" href="#/tags">Tags</a>
+    <a class="nav-link" id="nav-paths" href="#/paths">Paths</a>
+    <a class="nav-link" id="nav-types" href="#/types">Types</a>
+
+    <div class="actions">
+      <a href="javascript:void(0)" click.delegate="download('json')">
+        <img src="https://placehold.it/32x32" alt="Download (JSON)"/>
+      </a>
+      <a href="javascript:void(0)" click.delegate="download('yaml')">
+        <img src="https://placehold.it/32x32" alt="Download (YAML)"/>
+      </a>
+    </div>
+  </div>
+
+  <!--<a href="https://github.com/apinf/open-api-designer"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/365986a132ccd6a44c23a9169022c0b5c890c387/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f7265645f6161303030302e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_red_aa0000.png"></a>-->
 
   <div class="main">
     <compose class="form" view-model.bind="activeForm"></compose>
     <div class="preview" textcontent.one-way="json"></div>
+  </div>
+
+  <div class="brand-footer">
+    <img class="powered-by" src="https://placehold.it/400x48"/>
   </div>
 </template>

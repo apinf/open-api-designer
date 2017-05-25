@@ -25,6 +25,10 @@ h3 {
   font-family: "Roboto", "Helvetica", "Arial", sans-serif !important;
 }
 
+body {
+  margin: 0;
+}
+
 .preview {
   white-space: pre;
 
@@ -44,6 +48,72 @@ h3 {
   flex: 1;
   @media screen and (min-width: 40rem) {
     min-width: 40rem;
+  }
+}
+
+.brand-header {
+  height: 3.5rem;
+  margin-bottom: .5rem;
+  padding: .5rem;
+
+  background-color: black;
+
+  .right {
+    float: right;
+
+    a {
+      display: inline-block;
+
+      padding: .25rem;
+    }
+  }
+}
+
+.brand-footer {
+  height: 3rem;
+  margin-top: .5rem;
+  padding: .25rem;
+
+  background-color: black;
+}
+
+.nav {
+  border-bottom: 1px solid black;
+
+  > .nav-link {
+    display: inline-block;
+
+    box-sizing: border-box;
+    padding: .5rem 1rem;
+
+    text-decoration: none !important;
+
+    color: black !important;
+    border: 1px solid black;
+    border-bottom: none;
+    background-color: lightgray;
+
+    font-weight: bold;
+
+    &:hover {
+      background-color: lighten(lightgray, 7%);
+    }
+
+    &.open {
+      background-color: lighten(lightgray, 12%);
+    }
+  }
+
+  > .actions {
+    float: right;
+
+    margin-right: 1rem;
+
+    > a {
+      display: inline-block;
+
+      padding: .25rem;
+    }
   }
 }
 
