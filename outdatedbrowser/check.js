@@ -15,7 +15,7 @@ addLoadEvent(function() {
   outdatedBrowser({
     bgColor: '#f25648',
     color: '#ffffff',
-    lowerThan: 'transform',
+    lowerThan: 'IE10',
     languagePath: 'outdatedbrowser/lang/en.html'
   });
 });
