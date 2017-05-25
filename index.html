@@ -3,11 +3,19 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="outdatedbrowser/outdatedbrowser.min.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700" type="text/css">
     <title>Open API designer</title>
   </head>
 
   <body aurelia-app="main">
+    <script src="outdatedbrowser/outdatedbrowser.min.js"></script>
+    <div id="outdated">
+      <h6>Your browser is out-of-date!</h6>
+      <p>Update your browser to view this website correctly. <a id="btnUpdateBrowser" href="http://outdatedbrowser.com/">Update my browser now </a></p>
+      <p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">&times;</a></p>
+    </div>
+    <script src="outdatedbrowser/check.js"></script>
     <script src="scripts/vendor-bundle.js" data-main="aurelia-bootstrapper"></script>
   </body>
 </html>
