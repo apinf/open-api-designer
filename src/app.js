@@ -69,6 +69,6 @@ export class App {
 
   get currentFormJSON() {
     const data = JSON.stringify(this.activeForm.getValue(), '', '  ');
-    return data;
+    return `"${this.activeForm.id}": ${data}`;
   }
 }
