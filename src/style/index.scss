@@ -52,11 +52,13 @@ body {
     a {
       display: inline-block;
 
+      width: 32px;
+      height: 32px;
       padding: 0 .5rem;
 
       img {
-        width: 32px;
-        height: 32px;
+        width: 100%;
+        height: 100%;
       }
     }
   }
@@ -147,11 +149,13 @@ body {
     > a {
       display: inline-block;
 
+      width: 16px;
+      height: 16px;
       padding: .25rem;
 
       > img {
-        width: 16px;
-        height: 16px;
+        width: 100%;
+        height: 100%;
       }
     }
   }
