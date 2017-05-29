@@ -58,11 +58,15 @@ body {
 
 .brand-header {
   box-sizing: border-box;
-  height: 4.5rem;
+  height: 3.5rem;
   margin-bottom: .5rem;
-  padding: .5rem;
+  padding: .75rem;
 
   background-color: black;
+
+  .logo {
+    max-height: 32px;
+  }
 
   .right {
     float: right;
@@ -70,7 +74,11 @@ body {
     a {
       display: inline-block;
 
-      padding: .25rem;
+      padding: 0 .5rem;
+
+      img {
+        max-height: 32px;
+      }
     }
   }
 }
@@ -129,6 +137,10 @@ body {
       display: inline-block;
 
       padding: .25rem;
+
+      > img {
+        max-height: 16px;
+      }
     }
   }
 }
