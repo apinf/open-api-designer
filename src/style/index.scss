@@ -33,6 +33,32 @@ body {
   margin: 0;
 }
 
+.brand-header {
+  box-sizing: border-box;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
+  padding: .75rem;
+
+  background-color: black;
+
+  .logo {
+    max-height: 32px;
+  }
+
+  .right {
+    float: right;
+
+    a {
+      display: inline-block;
+
+      padding: 0 .5rem;
+
+      img {
+        max-height: 32px;
+      }
+    }
+  }
+}
 
 .main {
   margin: .5rem .5rem 4rem;
@@ -63,34 +89,6 @@ body {
     white-space: pre-wrap;
 
     font-family: monospace !important;
-  }
-}
-
-
-.brand-header {
-  box-sizing: border-box;
-  height: 3.5rem;
-  margin-bottom: .5rem;
-  padding: .75rem;
-
-  background-color: black;
-
-  .logo {
-    max-height: 32px;
-  }
-
-  .right {
-    float: right;
-
-    a {
-      display: inline-block;
-
-      padding: 0 .5rem;
-
-      img {
-        max-height: 32px;
-      }
-    }
   }
 }
 
