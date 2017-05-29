@@ -1,0 +1,245 @@
+.field {
+  display: inline-block;
+
+  box-sizing: border-box;
+  width: 100%;
+  padding: .25rem;
+
+  &.columns {
+    &.c1 { width: 12.5% }
+    &.c2 { width: 25.0% }
+    &.c3 { width: 37.5% }
+    &.c4 { width: 50.0% }
+    &.c5 { width: 62.5% }
+    &.c6 { width: 75.0% }
+    &.c7 { width: 87.5% }
+    &.c8 { width:  100% }
+  }
+
+  label {
+    display: block;
+
+    width: 100%;
+
+    font-size: .875rem;
+    font-weight: bold;
+
+    > tooltip {
+      height: 0.8rem;
+    }
+  }
+
+  label, .title {
+    &:empty {
+      display: none;
+    }
+  }
+
+  .title {
+    margin: 0;
+    margin-bottom: .5rem;
+    margin-left: .25rem;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+
+    > tooltip {
+      width: auto;
+      height: 1.2rem;
+    }
+  }
+
+  &.dropdown.option {
+    &::after {
+      float: right;
+
+      width: 0;
+      height: 0;
+
+      content: "";
+      transform: translateY(-200%) translateX(-50%);
+      pointer-events: none;
+
+      border-top: 0.5rem solid #777777;
+      border-right: 0.5rem solid transparent;
+      border-left: 0.5rem solid transparent;
+    }
+
+    > select {
+      width: 100%;
+      padding: .25rem 0;
+
+      border: none;
+      border-bottom: .0625rem solid $border-color;
+      background: none;
+
+      appearance: none;
+      -moz-appearance: none;
+      -webkit-appearance: none;
+
+      &:hover {
+        border-bottom: .0625rem solid $main-color;
+      }
+    }
+  }
+
+  &.checkbox.option > .box-wrapper {
+    display: inline-block;
+
+    margin-right: .5rem;
+
+    > label {
+      display: inline;
+
+      font-weight: normal;
+    }
+  }
+
+  &.text input, &.textarea textarea {
+    display: block;
+
+    width: 100%;
+    margin-bottom: .0625rem;
+    padding: .25rem 0;
+
+    resize: vertical;
+
+    border: none;
+    border-bottom: .0625rem solid $border-color;
+
+    &:hover {
+      border-bottom: .0625rem solid $main-color;
+    }
+
+    &:focus {
+      margin-bottom: 0;
+
+      border-bottom: .125rem solid $main-color;
+    }
+  }
+
+  &.object, &.array, &.type {
+    margin: .25rem;
+    padding: .25rem;
+
+    border: .0625rem solid #D6D6D6;
+    border-radius: .25rem;
+
+    &:not(:last-of-type) {
+      margin-bottom: .75rem;
+    }
+
+    > .items > .item.columns, &.columns {
+      &.c1 { width: calc(12.5% - .5rem) }
+      &.c2 { width: calc(25.0% - .5rem) }
+      &.c3 { width: calc(37.5% - .5rem) }
+      &.c4 { width: calc(50.0% - .5rem) }
+      &.c5 { width: calc(62.5% - .5rem) }
+      &.c6 { width: calc(75.0% - .5rem) }
+      &.c7 { width: calc(87.5% - .5rem) }
+      &.c8 { width: calc( 100% - .5rem) }
+    }
+
+    > legend {
+      .field {
+          > label {
+            display: none;
+          }
+          > select, > input {
+            border: .0625rem solid $border-color !important;
+            border-radius: .25rem;
+          }
+      }
+    }
+  }
+
+  &.type > legend {
+    select + input {
+      margin-left: .5rem;
+      padding: .2rem;
+
+      border: .0625rem solid $border-color;
+      border-radius: .25rem;
+
+      &:hover {
+        border-bottom: .0625rem solid $main-color;
+      }
+
+      &:focus {
+        margin-bottom: 0;
+
+        border-bottom: .125rem solid $main-color;
+      }
+    }
+  }
+
+  &.array {
+    > .controls {
+      margin-bottom: .5rem;
+
+      > .new-item {
+        padding: .375rem 1rem;
+
+        text-transform: uppercase;
+
+        border: none;
+        background-color: $main-color;
+
+        &:hover {
+          background-color: $dark-color;
+        }
+      }
+    }
+
+    > .items {
+      > .item {
+        display: inline-block;
+
+        > .controls {
+          float: left;
+
+          width: 2.5rem;
+
+          transform: translateY(-1rem);
+
+          > .delete-button, > .collapse-button {
+            display: inline-block;
+
+            cursor: pointer;
+            transform: translateY(50%);
+
+            border: none;
+            background: none;
+
+            > img {
+              opacity: .2;
+            }
+          }
+
+          > .delete-button > img {
+            width: 1rem;
+            height: 1rem;
+            padding: .25rem;
+          }
+
+          > .collapse-button > img {
+            width: 1.5rem;
+            height: 1.5rem;
+          }
+        }
+
+        > .actualItem {
+          display: inline-block;
+          float: right;
+
+          width: calc(100% - 2.5rem);
+
+          > .field {
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,30 @@
+.main {
+  margin: .5rem .5rem 4rem;
+
+  .form {
+    display: inline-block;
+
+    box-sizing: border-box;
+    width: 60%;
+
+    // Remove the outermost border in the editor
+    > fieldset, > div {
+      margin: 0;
+      padding: 0;
+
+      border: none;
+    }
+  }
+
+  .preview {
+    display: inline-block;
+    float: right;
+
+    box-sizing: border-box;
+    width: 40%;
+
+    white-space: pre-wrap;
+
+    font-family: monospace !important;
+  }
+}

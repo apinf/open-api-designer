@@ -1,0 +1,44 @@
+.brand-header {
+  box-sizing: border-box;
+  height: 3.5rem;
+  margin-bottom: 1.5rem;
+  padding: .75rem;
+
+  background-color: black;
+
+  .logo {
+    width: 330px;
+    height: 32px;
+  }
+
+  .right {
+    float: right;
+
+    a {
+      display: inline-block;
+
+      width: 32px;
+      height: 32px;
+      padding: 0 .5rem;
+
+      img {
+        width: 100%;
+        height: 100%;
+      }
+    }
+  }
+}
+
+.brand-footer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+
+  box-sizing: border-box;
+  width: 100%;
+  height: 3.5rem;
+  margin-top: .5rem;
+  padding: .25rem;
+
+  background-color: black;
+}
