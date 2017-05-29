@@ -42,7 +42,8 @@ body {
   background-color: black;
 
   .logo {
-    max-height: 32px;
+    width: 330px;
+    height: 32px;
   }
 
   .right {
@@ -54,7 +55,8 @@ body {
       padding: 0 .5rem;
 
       img {
-        max-height: 32px;
+        width: 32px;
+        height: 32px;
       }
     }
   }
@@ -148,7 +150,8 @@ body {
       padding: .25rem;
 
       > img {
-        max-height: 16px;
+        width: 16px;
+        height: 16px;
       }
     }
   }
