@@ -44,7 +44,8 @@ body {
     box-sizing: border-box;
     width: 60%;
 
-    > fieldset {
+    // Remove the outermost border in the editor
+    > fieldset, > div {
       margin: 0;
       padding: 0;
 
