@@ -33,28 +33,38 @@ body {
   margin: 0;
 }
 
-.preview {
-  white-space: pre;
-
-  font-family: monospace !important;
-}
 
 .main {
-  display: flex;
+  margin: .5rem .5rem 4rem;
 
-  margin-bottom: 3.5rem;
+  .form {
+    display: inline-block;
+    float: left;
 
-  flex-flow: wrap;
-}
+    box-sizing: border-box;
+    width: 60%;
 
-.form {
-  width: 70%;
+    > fieldset {
+      margin: 0;
+      padding: 0;
 
-  flex: 1;
-  @media screen and (min-width: 40rem) {
-    width: 80%;
+      border: none;
+    }
+  }
+
+  .preview {
+    display: inline-block;
+    float: right;
+
+    box-sizing: border-box;
+    width: 40%;
+
+    white-space: pre-wrap;
+
+    font-family: monospace !important;
   }
 }
+
 
 .brand-header {
   box-sizing: border-box;
