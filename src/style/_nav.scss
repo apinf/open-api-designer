@@ -1,7 +1,11 @@
 .nav {
+  position: sticky;
+  top: 0;
+
   padding: .5rem 1rem;
 
   border-bottom: 1px solid lightgray;
+  background-color: white;
 
   > .nav-link {
     display: inline;
