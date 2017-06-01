@@ -189,6 +189,33 @@ export class Optionfield extends Field {
   }
 
   /**
+   * Get the label(s) of the currently chosen option(s)
+   * @return {String|String[]} The label or labels depending on the format of
+   *                           this Optionfield.
+   */
+  getChoiceLabel() {
+    if (this.format === 'dropdown') {
+      for (const choice of this.choices) {
+        if (choice.selected) {
+          return choice.label;
+        }
+      }
+      return undefined;
+    } else if (this.format === 'checkbox') {
+      if (this.checkboxFormat === 'simple') {
+        return this.choices[0].label;
+      }
+      const chosen = [];
+      for (const choice of this.choices) {
+        if (choice.selected) {
+          chosen.push(choice.label);
+        }
+      }
+      return chosen;
+    }
+  }
+
+  /**
    * @inheritdoc
    * @param {String|String[]} value The new choice or choices depending on the
    *                                format of this field.
