@@ -1,5 +1,5 @@
 import {parseJSON} from './resources/jsonparser';
-import {schema} from './schemas/index';
+import {schema, fieldsToShow} from './schemas/index';
 import YAML from 'yamljs';
 import $ from 'jquery';
 
@@ -68,6 +68,14 @@ export class App {
   }
 
   get currentFormJSON() {
+    if (fieldsToShow.hasOwnProperty(this.activeForm.id)) {
+      const rawData = this.forms.getValue();
+      let output = '';
+      for (const field of fieldsToShow[this.activeForm.id]) {
+        output += `"${field}": ${JSON.stringify(rawData[field], '', '  ')}\n`;
+      }
+      return output;
+    }
     const data = JSON.stringify(this.activeForm.getValue(), '', '  ');
     return `"${this.activeForm.id}": ${data}`;
   }

@@ -5,6 +5,18 @@ import {tags} from './tags';
 import {paths} from './paths';
 import {types} from './types';
 
+export const fieldsToShow = {
+  'header': [
+    'info',
+    'contact',
+    'license',
+    'host',
+    'basePath'
+  ],
+  'types': ['definitions'],
+  'mime': ['consumes', 'produces']
+};
+
 export const schema = {
   'type': 'object',
   'children': {
