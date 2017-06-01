@@ -207,6 +207,19 @@ export class Arrayfield extends Parentfield {
       return superResolv;
     }
 
+    if (this.format === 'map') {
+      // Matches `fieldName(expectedValue)`
+      const match = (/([a-zA-Z0-9]+)\((.+?)\)/g).exec(path[0]);
+      if (match) {
+        const [, fieldName, value] = match;
+        for (const child of this._children) {
+          if (child.getValue()[fieldName] === value) {
+            return child;
+          }
+        }
+      }
+    }
+
     if (path[0] === ':item') {
       return this.item;
     }
