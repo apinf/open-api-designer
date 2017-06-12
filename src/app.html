@@ -23,12 +23,15 @@
     <a class="nav-link" id="nav-types" href="#/types">Types</a>
 
     <div class="actions">
-      <a href="javascript:void(0)" click.delegate="download('json')">
-        <img src="res/download.svg" alt="Download"/>
-      </a> (JSON)
-      <a href="javascript:void(0)" click.delegate="download('yaml')">
-        <img src="res/download.svg" alt="Download"/>
-      </a> (YAML)
+      <div class="download dropdown">
+        <button class="button">
+          <img src="res/download.svg" alt="Download"/>
+        </button>
+        <div class="content">
+          <a href="javascript:void(0)" click.delegate="download('json')">JSON</a>
+          <a href="javascript:void(0)" click.delegate="download('yaml')">YAML</a>
+        </div>
+      </div>
     </div>
   </div>
 

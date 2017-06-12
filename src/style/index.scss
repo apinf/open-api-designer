@@ -2,6 +2,7 @@ $main-color: #FFC107;
 $dark-color: darken($main-color, 5%);
 $border-color: #DBDBDB;
 
+@import "dropdown";
 @import "tooltip";
 @import "html";
 @import "brand";
