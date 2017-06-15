@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="object field c${columns} columns" if.bind="display">
+  <fieldset class="object field has-children c${columns} columns" if.bind="display">
     <legend if.bind="hasLegend && !collapsed">
       <template repeat.for="childElem of iterableLegendChildren">
         <compose containerless view-model.bind="childElem"></compose>

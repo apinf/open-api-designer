@@ -1,5 +1,5 @@
 <template>
-  <div class="array field c${columns} columns" if.bind="display">
+  <div class="array field has-children c${columns} columns" if.bind="display">
     <h3 click.delegate="toggleCollapse()" class="title">
       ${label}
       <tooltip if.bind="helpText" text.bind="helpText">

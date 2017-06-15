@@ -1,5 +1,5 @@
 <template>
-  <fieldset class="type field c${columns} columns" if.bind="display">
+  <fieldset class="type field has-children c${columns} columns" if.bind="display">
     <legend>
       <select value.two-way="selectedType">
         <option repeat.for="type of possibleTypes">${type}</option>
