@@ -67,11 +67,11 @@ export class App {
   }
 
   get currentFormJSON() {
+    const rawData = this.forms.getValue();
+    // This is a temporary-ish solution for saving the form data automatically.
+    // Basically this saves the form every time the preview updates.
+    window.localStorage.cachedForm = JSON.stringify(rawData);
     if (fieldsToShow.hasOwnProperty(this.activeForm.id)) {
-      const rawData = this.forms.getValue();
-      // This is a temporary-ish solution for saving the form data automatically.
-      // Basically this saves the form every time the preview updates.
-      window.localStorage.cachedForm = JSON.stringify(rawData);
       let output = '';
       for (const field of fieldsToShow[this.activeForm.id]) {
         output += `"${field}": ${JSON.stringify(rawData[field], '', '  ')}\n`;
