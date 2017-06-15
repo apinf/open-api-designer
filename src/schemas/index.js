@@ -1,6 +1,6 @@
 import {header} from './header';
 import {mime} from './mime';
-import {security} from './security';
+import {securityDefinitions} from './security';
 import {tags} from './tags';
 import {paths} from './paths';
 import {types} from './types';
@@ -23,7 +23,7 @@ export const schema = {
   'children': {
     header,
     mime,
-    security,
+    securityDefinitions,
     tags,
     paths,
     types,

@@ -1,6 +1,7 @@
-export const security = {
+export const securityDefinitions = {
   'type': 'array',
   'format': 'map',
+  'label': 'Security Definitions',
   'keyField': 'key',
   'item': {
     'label': 'Security definition',
@@ -60,22 +61,24 @@ export const security = {
             'conditions': {
               '../flow': ['password', 'application', 'accessCode']
             }
-          }/*,
+          },
           'scopes': {
             'type': 'array',
             'format': 'map',
             'keyField': 'key',
+            'valueField': 'value',
             'item': {
               'type': 'object',
-              'keyField': 'key',
               'children': {
                 'key': {
                   'type': 'text'
                 },
-                'value':
+                'description': {
+                  'type': 'text'
+                }
               }
             }
-          }*/
+          }
         }
       }
     }
