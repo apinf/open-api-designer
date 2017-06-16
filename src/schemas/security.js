@@ -1,7 +1,35 @@
-export const securityDefinitions = {
+const securityRequirements = {
   'type': 'array',
   'format': 'map',
-  'label': 'Security Definitions',
+  'keyField': 'name',
+  'valueField': 'scopes',
+  'label': 'Requirements',
+  'item': {
+    'label': 'Security Requirement',
+    'type': 'object',
+    'children': {
+      'name': {
+        'type': 'option',
+        'format': 'dropdown',
+        'dataSources': [{
+          'source': '/global-security/definitions',
+          'key': '#:key'
+        }]
+      },
+      'scopes': {
+        'type': 'array',
+        'item': {
+          'type': 'text'
+        }
+      }
+    }
+  }
+};
+
+const securityDefinitions = {
+  'type': 'array',
+  'format': 'map',
+  'label': 'Definitions',
   'keyField': 'key',
   'item': {
     'label': 'Security definition',
@@ -82,5 +110,14 @@ export const securityDefinitions = {
         }
       }
     }
+  }
+};
+
+export const security = {
+  'type': 'object',
+  'label': 'Security',
+  'children': {
+    definitions: securityDefinitions,
+    requirements: securityRequirements
   }
 };
