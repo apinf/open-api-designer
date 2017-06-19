@@ -10,6 +10,7 @@ export class LazyLinkfield extends Field {
   target = '#';
   overrides = {};
   child = undefined;
+  cachedValue = undefined;
 
   /** @inheritdoc */
   init(id = '', args = {}) {
@@ -54,6 +55,10 @@ export class LazyLinkfield extends Field {
       } else {
         target[lastFieldPathEntry] = value;
       }
+    }
+    if (this.cachedValue) {
+      this.child.setValue(this.cachedValue);
+      this.cachedValue = undefined;
     }
   }
 
@@ -103,6 +108,10 @@ export class LazyLinkfield extends Field {
    */
   setValue(value) {
     if (!this.child) {
+      // Caching values helps when using setValue() in a big form. By caching
+      // the values, we won't lose setValue data due to dependencies of this
+      // field not getting their value set before this field.
+      this.cachedValue = value;
       return;
     }
     this.child.setValue(value);
