@@ -45,6 +45,21 @@ export class Linkfield extends Field {
     return field;
   }
 
+  resolvePath(path) {
+    const superResolv = super.resolvePath(path);
+    if (superResolv) {
+      return superResolv;
+    }
+
+    if (path[0] === ':target') {
+      const target = this.resolveTarget();
+      if (target) {
+        return target.resolvePath(path.splice(1));
+      }
+    }
+    return undefined;
+  }
+
   /**
    * Set the value of the target field.
    *
