@@ -89,6 +89,11 @@ export class Optionfield extends Field {
     return super.init(id, args);
   }
 
+  isEmpty() {
+    const value = this.getValue();
+    return !value || (Array.isArray(value) && value.length === 0);
+  }
+
   created() {
     const ds = this.dataSources;
     this.dataSources = [];
