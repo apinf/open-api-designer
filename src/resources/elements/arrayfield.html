@@ -8,7 +8,7 @@
     </h3>
     <div class="controls" if.bind="!collapsed">
       <button class="new-item" click.delegate="addChild()">
-        New ${item.label}
+        ${newItemText ? newItemText : "New " + item.label}
       </button>
     </div>
     <div class="items" if.bind="!collapsed">
