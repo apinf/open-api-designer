@@ -214,14 +214,14 @@ export class Arrayfield extends Parentfield {
         const [, fieldName, value] = match;
         for (const child of this._children) {
           if (child.getValue()[fieldName] === value) {
-            return child;
+            return child.resolvePath(path.splice(1));
           }
         }
       }
     }
 
     if (path[0] === ':item') {
-      return this.item;
+      return this.item.resolvePath(path.splice(1));
     }
     return undefined;
   }
