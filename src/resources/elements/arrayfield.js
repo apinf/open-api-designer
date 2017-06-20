@@ -202,9 +202,9 @@ export class Arrayfield extends Parentfield {
   }
 
   resolvePath(path) {
-    const superResolv = super.resolvePath(path);
-    if (superResolv) {
-      return superResolv;
+    const parentResolveResult = super.resolvePath(path);
+    if (parentResolveResult) {
+      return parentResolveResult;
     }
 
     if (this.format === 'map') {

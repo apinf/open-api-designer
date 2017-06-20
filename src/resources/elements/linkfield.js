@@ -46,9 +46,9 @@ export class Linkfield extends Field {
   }
 
   resolvePath(path) {
-    const superResolv = super.resolvePath(path);
-    if (superResolv) {
-      return superResolv;
+    const parentResolveResult = super.resolvePath(path);
+    if (parentResolveResult) {
+      return parentResolveResult;
     }
 
     if (path[0] === ':target') {

@@ -75,9 +75,9 @@ export class Parentfield extends Field {
 
   /** @inheritdoc */
   resolvePath(path) {
-    const superResolv = super.resolvePath(path);
-    if (superResolv) {
-      return superResolv;
+    const parentResolveResult = super.resolvePath(path);
+    if (parentResolveResult) {
+      return parentResolveResult;
     }
 
     const elem = this._children[path[0]];
