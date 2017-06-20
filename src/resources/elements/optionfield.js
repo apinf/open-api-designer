@@ -89,6 +89,10 @@ export class Optionfield extends Field {
     return super.init(id, args);
   }
 
+  /**
+   * Check if this Optionfield is empty. An Optionfield is empty either if the
+   * value is false or the value array (checkbox-formatted field) is empty.
+   */
   isEmpty() {
     const value = this.getValue();
     return !value || (Array.isArray(value) && value.length === 0);
