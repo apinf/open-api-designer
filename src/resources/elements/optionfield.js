@@ -167,18 +167,23 @@ export class Optionfield extends Field {
   }
 
   /**
-   * @inheritdoc
-   * @return {String[]|String} The choice or choices of this option field
-   *                           depending on the format of this field.
+   * If this field is a dropdown, get the name of the selected choice.
+   * If this field is a simple checkbox, get whether or not the checkbox is checked.
+   * If this field is a multi-checkbox field, get the names of the checked checkboxes.
    */
   getValue() {
     if (this.format === 'dropdown') {
+      // Optionfield is a dropdown, so there's only one selected field.
+      // Return the name of the selected field.
       return this.selectedChoice;
     } else if (this.format === 'checkbox') {
+      // If this a simple checkbox (only one checkbox), just return whether or
+      // not it is selected.
       if (this.checkboxFormat === 'simple') {
         return this.choices[0].selected;
       }
       const chosen = [];
+      // Loop through the choices and add their names to the array that is returned.
       for (const choice of this.choices) {
         if (choice.selected) {
           chosen.push(choice.key);
@@ -195,6 +200,8 @@ export class Optionfield extends Field {
    */
   getChoiceLabel() {
     if (this.format === 'dropdown') {
+      // Optionfield is a dropdown, so there's only one selected field.
+      // Loop through the choices to find it and return its label.
       for (const choice of this.choices) {
         if (choice.selected) {
           return choice.label;
@@ -202,9 +209,13 @@ export class Optionfield extends Field {
       }
       return undefined;
     } else if (this.format === 'checkbox') {
+      // If this a simple checkbox (only one checkbox), just return the label
+      // of that.
       if (this.checkboxFormat === 'simple') {
         return this.choices[0].label;
       }
+      // Loop through the choices and add the labels of the selected choices to
+      // the array that is returned.
       const chosen = [];
       for (const choice of this.choices) {
         if (choice.selected) {
@@ -216,7 +227,7 @@ export class Optionfield extends Field {
   }
 
   /**
-   * @inheritdoc
+   * Set the chosen fields of this Optionfield and unselect all other fields.
    * @param {String|String[]} value The new choice or choices depending on the
    *                                format of this field.
    */
