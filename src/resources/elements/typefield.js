@@ -219,6 +219,18 @@ export class Typefield extends Field {
     return this.selectedType;
   }
 
+  resolvePath(path) {
+    const superResolv = super.resolvePath(path);
+    if (superResolv) {
+      return superResolv;
+    }
+
+    if (this.child && path[0] === ':child') {
+      return this.child.resolvePath(path.splice(1));
+    }
+    return undefined;
+  }
+
   /**
    * Get all the possible type names.
    * @return {String[]} The names of the possible types.
