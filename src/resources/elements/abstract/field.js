@@ -136,7 +136,7 @@ export class Field {
    * implementations should override this.
    */
   isEmpty() {
-    return false;
+    return true;
   }
   /**
    * Recursively get an unique identifier for this field.
