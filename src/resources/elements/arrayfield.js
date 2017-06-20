@@ -209,11 +209,18 @@ export class Arrayfield extends Parentfield {
 
     if (this.format === 'map') {
       // Matches `fieldName(expectedValue)`
+      // First capture group: Field name
+      // Second capture group: Expected value of given field.
       const match = (/([a-zA-Z0-9]+)\((.+?)\)/g).exec(path[0]);
       if (match) {
-        const [, fieldName, value] = match;
+        // Match found, loop through children to find a child that has the
+        // expected value in the given field.
+
+        // Result unpacking: first element is the whole match and the remaining
+        // elements are capture group results.
+        const [, fieldName, expectedValue] = match;
         for (const child of this._children) {
-          if (child.getValue()[fieldName] === value) {
+          if (child.getValue()[fieldName] === expectedValue) {
             return child.resolvePath(path.splice(1));
           }
         }
