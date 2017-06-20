@@ -56,6 +56,7 @@ export class LazyLinkfield extends Field {
         target[lastFieldPathEntry] = value;
       }
     }
+    // Use cached value if it has been set.
     if (this.cachedValue) {
       this.child.setValue(this.cachedValue);
       this.cachedValue = undefined;
