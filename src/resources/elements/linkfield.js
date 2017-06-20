@@ -51,6 +51,8 @@ export class Linkfield extends Field {
       return parentResolveResult;
     }
 
+    // If the target exists and the next path piece to be resolved targets the
+    // target, continue recursing from the target.
     if (path[0] === ':target') {
       const target = this.resolveTarget();
       if (target) {

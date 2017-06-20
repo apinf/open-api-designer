@@ -225,6 +225,8 @@ export class Typefield extends Field {
       return parentResolveResult;
     }
 
+    // If the child exists and the next path piece to be resolved targets the
+    // child, continue recursing from the child.
     if (this.child && path[0] === ':child') {
       return this.child.resolvePath(path.splice(1));
     }
