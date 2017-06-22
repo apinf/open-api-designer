@@ -35,12 +35,6 @@ export class Arrayfield extends Parentfield {
    * @type {Boolean}
    */
   addIndexToChildLabel = true;
-  /**
-   * Whether or not to automatically collapse other fields when uncollapsing a
-   * field.
-   * @type {Boolean}
-   */
-  collapseManagement = false;
   /** @inheritdoc */
   _children = [];
 
@@ -57,9 +51,6 @@ export class Arrayfield extends Parentfield {
    *                                     {@link #format} is {@linkplain map}.
    *                                     This field is optional. By default, the
    *                                     whole value will be used as-is.
-   * @param {Boolean} [args.collapsed]   Whether or not the UI element should be
-   *                                     collapsed.
-   * @param {Boolean} [args.isCollapsible] Set to false to disable collapsing.
    */
   init(id = '', args = {}) {
     args = Object.assign({
@@ -67,19 +58,13 @@ export class Arrayfield extends Parentfield {
       newItemText: undefined,
       keyField: '_key',
       valueField: undefined,
-      addIndexToChildLabel: true,
-      collapseManagement: false,
-      collapsed: false,
-      isCollapsible: true
+      addIndexToChildLabel: true
     }, args);
     this.item = args.item;
     this.newItemText = args.newItemText;
     this.keyField = args.keyField;
     this.valueField = args.valueField;
     this.addIndexToChildLabel = args.addIndexToChildLabel;
-    this.collapseManagement = args.collapseManagement;
-    this.collapsed = args.collapsed;
-    this.isCollapsible = args.isCollapsible;
     return super.init(id, args);
   }
 
@@ -133,16 +118,6 @@ export class Arrayfield extends Parentfield {
       }
     }
     return value;
-  }
-
-  childCollapseChanged(field, isNowCollapsed) {
-    if (!isNowCollapsed && this.collapseManagement) {
-      for (const child of this._children) {
-        if (child !== field) {
-          child.setCollapsed(true);
-        }
-      }
-    }
   }
 
   /**

@@ -1,35 +1,20 @@
-import {Field} from './field';
+import {Collapsiblefield} from './collapsiblefield';
 
 /**
  * Parentfield is a {@link Field} with children.
  */
-export class Parentfield extends Field {
+export class Parentfield extends Collapsiblefield {
   /**
    * The internal storage for the children of this field.
    * @private
    */
   _children;
   /**
-   * Whether or not the UI element should be collapsed (i.e. only show the title)
+   * Whether or not to automatically collapse other fields when uncollapsing a
+   * field.
    * @type {Boolean}
    */
-  collapsed = false;
-  isCollapsible = true;
-
-  childCollapseChanged(field, isNowCollapsed) {}
-
-  toggleCollapse() {
-    if (this.isCollapsible) {
-      this.setCollapsed(!this.collapsed);
-    }
-  }
-
-  setCollapsed(collapsed) {
-    this.collapsed = collapsed;
-    if (this.parent) {
-      this.parent.childCollapseChanged(this, this.collapsed);
-    }
-  }
+  collapseManagement = false;
 
   /**
    * Get the children of this field as an array.
@@ -87,5 +72,34 @@ export class Parentfield extends Field {
       return elem.resolvePath(path.splice(1));
     }
     return undefined;
+  }
+
+  /**
+   * @inheritdoc
+   * @param {Boolean} [args.collapseManagement] Whether or not to automatically
+   *                                            collapse other fields when
+   *                                            uncollapsing a field.
+   */
+  init(id = '', args = {}) {
+    args = Object.assign({}, {
+      collapseManagement: true
+    });
+    this.collapseManagement = args.collapseManagement;
+    return super.init(id, args);
+  }
+
+  /**
+   * @inheritdoc
+   *
+   * This handles collapse management.
+   */
+  childCollapseChanged(field, isNowCollapsed) {
+    if (!isNowCollapsed && this.collapseManagement) {
+      for (const child of this._children) {
+        if (child !== field) {
+          child.setCollapsed(true);
+        }
+      }
+    }
   }
 }

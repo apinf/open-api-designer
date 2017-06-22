@@ -1,5 +1,5 @@
 import {containerless, bindable} from 'aurelia-framework';
-import {Field} from './abstract/field';
+import {Collapsiblefield} from './abstract/collapsiblefield';
 import {parseJSON} from '../jsonparser';
 
 /**
@@ -10,7 +10,7 @@ import {parseJSON} from '../jsonparser';
  * evaluation and supports $refs in type options.
  */
 @containerless
-export class Typefield extends Field {
+export class Typefield extends Collapsiblefield {
   /**
    * The type that is currently selected.
    * @type {String}
@@ -66,29 +66,6 @@ export class Typefield extends Field {
    * @type {Object}
    */
   types = {};
-  /**
-   * Whether or not the UI element should be collapsed (i.e. only show the title)
-   * @type {Boolean}
-   */
-  collapsed = false;
-  isCollapsible = true;
-
-  /*
-   * Called by child fields when they are collapsed/uncollapsed.
-   * Unused in Typefields, currently only used in Arrayfields.
-   */
-  childCollapseChanged(field, isNowCollapsed) {}
-
-  toggleCollapse() {
-    this.setCollapsed(!this.collapsed);
-  }
-
-  setCollapsed(collapsed) {
-    this.collapsed = collapsed;
-    if (this.parent) {
-      this.parent.childCollapseChanged(this, this.collapsed);
-    }
-  }
 
   /**
    * @inheritdoc
@@ -101,12 +78,9 @@ export class Typefield extends Field {
    * @param {Object} [args.types]    The schemas for the available types.
    * @param {Boolean} [args.copyValue] Whether or not to copy the value over to
    *                                   the new child when switching types.
-   * @param {Boolean} [args.collapsed] Whether or not to make the UI field be
-   *                                   collapsed by default.
    * @param {String} [args.keyPlaceholder] The UI placeholder for the key form field.
    * @param {String} [args.selectedType]   The type that should be selected by
    *                                       default.
-   * @param {Boolean} [args.isCollapsible] Set to false to disable collapsing.
    */
   init(id = '', args = {}) {
     args = Object.assign({
@@ -116,8 +90,6 @@ export class Typefield extends Field {
       keyKey: '',
       keyPlaceholder: 'Object key...',
       copyValue: false,
-      collapsed: false,
-      isCollapsible: true,
       types: { 'null': { 'type': 'text' } }
     }, args);
     this.types = args.types;
@@ -126,8 +98,6 @@ export class Typefield extends Field {
     this.keyKey = args.keyKey;
     this.keyPlaceholder = args.keyPlaceholder;
     this.copyValue = args.copyValue;
-    this.collapsed = args.collapsed;
-    this.isCollapsible = args.isCollapsible;
     this.defaultType = args.defaultType;
     this.setType(args.defaultType || Object.keys(this.types)[0]);
     return super.init(id, args);

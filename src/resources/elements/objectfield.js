@@ -21,11 +21,9 @@ export class Objectfield extends Parentfield {
 
   /** @inheritdoc */
   init(id = '', args = {}) {
-    args = Object.assign({children: {}, collapsed: false, isCollapsible: true, legendChildren: undefined}, args);
+    args = Object.assign({children: {}, legendChildren: undefined}, args);
     this._children = args.children;
-    this.collapsed = args.collapsed;
     this.legendChildren = args.legendChildren;
-    this.isCollapsible = args.isCollapsible;
     return super.init(id, args);
   }
 
