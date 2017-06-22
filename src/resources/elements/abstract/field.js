@@ -365,4 +365,9 @@ export class Field {
     }
     return clone;
   }
+
+  // Functions implemented in Collapsiblefield.
+  setCollapsed() {}
+  toggleCollapse() {}
+  childCollapseChanged() {}
 }
