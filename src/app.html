@@ -60,23 +60,37 @@
   <div class="main" if.bind="activeForm">
     <div class="about" if.bind="activeForm === 'about'">
       <div class="about-inner">
-        <h2>What is OpenAPI designer?</h2>
-        <p>OpenAPI designer allows you to create and update  API design files. It is a a form based editor for designing APIs. It supports the OpenAPI/Swagger version 2.0. </p>
+        <h3>What is OpenAPI designer?</h3>
+        <p>
+          OpenAPI designer allows you to create and edit API design files.
+          It is a a form based editor for designing APIs.
+          It currently supports the <a href="http://swagger.io/">OpenAPI/Swagger</a> version 2.0.
+        </p>
 
-        <h2>Why use OpenAPI designer?</h2>
-        <p>Developers can get started more easily if they can view an API design document and can try out the API calls.
-        API designers can share the design file and get feedback from other stakeholders. This facilitates collaborative API design process.
-        Coding skills and understanding of json/yaml is not required for using the OpenAPI designer.
-        The UI guides the user through the process of creating the required information.</p>
+        <h3>Why use OpenAPI designer?</h3>
+        <p>
+          Developers can get started more easily if they can view an API design document and can try out the API calls.
+          API designers can share the design file and get feedback from other stakeholders. This facilitates collaborative API design process.
+          Coding skills and understanding of JSON/YAML is not required for using the OpenAPI designer.
+          The UI guides the user through the process of creating the required information.
+        </p>
 
-        <h2>How to use it?</h2>
-        <p>When the editor is opened, there is an empty form. The design file can be created by adding paths, operations and parameters.
-        Definitions and Tags can be designed globally and referred in Paths, Operations, Parameters and Responses.
-        You can download the designed file as json or yaml format. The downloaded file can be viewed in Swagger / OpenAPI designer UI.</p>
-        <p>Future enhancements include uploading a pre-existing design file or modifications and saving the design file on server. OpenAPI version 3.0 support is also on the roadmap.</p>
+        <h3>How to use it?</h3>
+        <p>
+          When the editor is opened, there is an empty form. The design file can be created by adding paths, types, operations and parameters.
+          Types, Parameters, Operations and Tags can be designed globally and referred to under Paths.
+          You can download the designed file as JSON or YAML.
+          The downloaded file can be viewed in viewers such as <a href="http://swagger.io/swagger-ui/">Swagger UI</a>.
+        </p>
+        <p>
+          Future enhancements include importing a pre-existing design file or modifications and saving the design file to <a href="https://openapi.space">OpenAPI space</a>.
+          OpenAPI <a href="https://github.com/OAI/OpenAPI-Specification/blob/OpenAPI.next/README.md">version 3.0</a> support is also on the roadmap.
+        </p>
 
-        <h2>More information</h2>
-        <p>Visit the <a href="https://github.com/apinf/openapi-designer">project repository</a> in Github</p>
+        <h3>More information</h3>
+        <p>
+          Visit the <a href="https://github.com/apinf/openapi-designer">project repository</a> in Github
+        </p>
       </div>
     </div>
     <compose class="form" view-model.bind="activeForm" if.bind="activeForm !== 'about'"></compose>
