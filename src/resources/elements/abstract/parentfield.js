@@ -82,7 +82,7 @@ export class Parentfield extends Collapsiblefield {
    */
   init(id = '', args = {}) {
     args = Object.assign({
-      collapseManagement: true
+      collapseManagement: false
     }, args);
     this.collapseManagement = args.collapseManagement;
     return super.init(id, args);
