@@ -81,9 +81,9 @@ export class Parentfield extends Collapsiblefield {
    *                                            uncollapsing a field.
    */
   init(id = '', args = {}) {
-    args = Object.assign({}, {
+    args = Object.assign({
       collapseManagement: true
-    });
+    }, args);
     this.collapseManagement = args.collapseManagement;
     return super.init(id, args);
   }
