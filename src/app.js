@@ -19,11 +19,10 @@ export class App {
       return;
     }
 
-    this.activeForm = this.forms.getChild('header');
-    this.activeForm.show = true;
+    this.activeForm = 'about';
 
     window.onhashchange = () => {
-      const formID = window.location.hash.substr(2) || 'header';
+      const formID = window.location.hash.substr(2) || 'about';
       if (typeof this.activeForm === 'object') {
         this.activeForm.show = false;
       }
