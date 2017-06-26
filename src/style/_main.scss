@@ -27,4 +27,13 @@
 
     font-family: monospace !important;
   }
+
+  .about {
+    max-width: 45rem;
+    margin: auto;
+
+    h2 {
+      margin-bottom: .5rem;
+    }
+  }
 }
