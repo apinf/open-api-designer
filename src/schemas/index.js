@@ -4,7 +4,7 @@ import {security} from './security';
 import {tags} from './tags';
 import {paths} from './paths';
 import {types} from './types';
-import {parameters} from './parameters';
+import {parameters, parameterItemDefinition} from './parameters';
 import {responses} from './responses';
 
 export const fieldsToShow = {
@@ -20,6 +20,9 @@ export const fieldsToShow = {
   'mime': ['consumes', 'produces'],
   'global-security': ['security', 'securityDefinitions']
 };
+
+const hiddenParameterItemDefinition = Object.assign({}, parameterItemDefinition);
+hiddenParameterItemDefinition.showValueInParent = false;
 
 export const schema = {
   'type': 'object',
@@ -40,6 +43,7 @@ export const schema = {
         responses
       }
     },
+    'parameter-item-definition': hiddenParameterItemDefinition,
     'parameters': {
       'type': 'link',
       'target': '/global-definitions/parameters'

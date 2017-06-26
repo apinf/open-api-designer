@@ -1,5 +1,89 @@
 import {typeFormatChoices} from './types';
 
+const parameterType = {
+  'type': 'option',
+  'columns': '4',
+  'placeholder': 'Type name',
+  'format': 'dropdown',
+  'choices': ['string', 'integer', 'number', 'boolean', 'array']
+};
+
+const toplevelParameterType = JSON.parse(JSON.stringify(parameterType));
+toplevelParameterType.conditions = {
+  '../in': ['path', 'query', 'header', 'formData']
+};
+toplevelParameterType.choices.push({
+  'key': 'file',
+  'conditions': {
+    '../in': 'formData'
+  }
+});
+
+const parameterFormat = {
+  'type': 'option',
+  'format': 'dropdown',
+  'choices': typeFormatChoices
+};
+
+const toplevelParameterFormat = JSON.parse(JSON.stringify(parameterFormat));
+toplevelParameterFormat.conditions = {
+  '../in': ['path', 'query', 'header', 'formData']
+};
+
+const parameterCollectionFormat = {
+  'type': 'option',
+  'format': 'dropdown',
+  'label': 'Collection format',
+  'choices': [{
+    'key': 'csv',
+    'label': 'CSV (foo,bar)'
+  }, {
+    'key': 'ssv',
+    'label': 'SSV (foo bar)'
+  }, {
+    'key': 'tsv',
+    'label': 'TSV (foo\\tbar)'
+  }, {
+    'key': 'pipes',
+    'label': 'Pipes (foo|bar)'
+  }],
+  'conditions': {
+    '../type': 'array'
+  }
+};
+
+const toplevelParameterCollectionFormat = JSON.parse(JSON.stringify(parameterCollectionFormat));
+toplevelParameterCollectionFormat.conditions['../type'] = 'array';
+toplevelParameterCollectionFormat.choices.push({
+  'key': 'multi',
+  'label': 'Parameter separation (foo=bar&foo=baz)',
+  'conditions': [
+    '../in': ['query', 'formData']
+  ]
+});
+
+export const parameterItemDefinition = {
+  'type': 'object',
+  'children': {
+    'type': parameterType,
+    'format': parameterFormat,
+    'collectionFormat': parameterCollectionFormat,
+    'items': {
+      'type': 'lazylink',
+      'target': '/parameter-item-definition',
+      'conditions': {
+        '../type': 'array'
+      }
+    }
+  }
+};
+
+const toplevelParameterItemDefinition = Object.assign({}, parameterItemDefinition);
+toplevelParameterItemDefinition.conditions = {
+  '../in': ['path', 'query', 'header', 'formData'],
+  '../type': 'array'
+};
+
 export const parameter = {
   'type': 'selectable',
   'label': 'Parameter #$index: ${#/name}',
@@ -51,24 +135,6 @@ export const parameter = {
             '../in': 'body'
           }
         },
-        'type': {
-          'type': 'option',
-          'columns': '4',
-          'placeholder': 'Type name',
-          'format': 'dropdown',
-          'choices': ['string', 'integer', 'number', 'boolean', 'array', 'file'],
-          'conditions': {
-            '../in': ['path', 'query', 'header', 'formData']
-          }
-        },
-        'format': {
-          'type': 'option',
-          'format': 'dropdown',
-          'choices': typeFormatChoices,
-          'conditions': {
-            '../in': ['path', 'query', 'header', 'formData']
-          }
-        },
         'allowEmptyValue': {
           'type': 'option',
           'format': 'checkbox',
@@ -77,45 +143,10 @@ export const parameter = {
             '../in': ['path', 'query', 'header', 'formData']
           }
         },
-        'items': {
-          'type': 'array',
-          'item': {
-            'type': 'text',
-            'label': 'Non-body parameter items not yet implemented'
-          },
-          'conditions': {
-            '../in': ['path', 'query', 'header', 'formData'],
-            '../type': 'array'
-          }
-        },
-        'collectionFormat': {
-          'type': 'option',
-          'format': 'dropdown',
-          'label': 'Collection format',
-          'choices': [{
-            'key': 'csv',
-            'label': 'CSV (foo,bar)'
-          }, {
-            'key': 'ssv',
-            'label': 'SSV (foo bar)'
-          }, {
-            'key': 'tsv',
-            'label': 'TSV (foo\\tbar)'
-          }, {
-            'key': 'pipes',
-            'label': 'Pipes (foo|bar)'
-          }, {
-            'key': 'multi',
-            'label': 'Parameter separation (foo=bar&foo=baz)',
-            'conditions': [
-              '../in': ['query', 'formData']
-            ]
-          }],
-          'conditions': {
-            '../in': ['path', 'query', 'header', 'formData'],
-            '../type': 'array'
-          }
-        }
+        'type': toplevelParameterType,
+        'format': toplevelParameterFormat,
+        'collectionFormat': toplevelParameterCollectionFormat,
+        'items': toplevelParameterItemDefinition
       }
     },
     'reference': {
