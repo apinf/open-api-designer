@@ -24,13 +24,19 @@ export class App {
 
     window.onhashchange = () => {
       const formID = window.location.hash.substr(2) || 'header';
-      if (this.forms.hasChild(formID)) {
+      if (typeof this.activeForm === 'object') {
         this.activeForm.show = false;
+      }
+      if (formID === 'about') {
+        this.activeForm = 'about';
+      } else if (this.forms.hasChild(formID)) {
         this.activeForm = this.forms.getChild(formID);
         this.activeForm.show = true;
-        $('.nav > .nav-link.open').removeClass('open');
-        $(`#nav-${formID}`).addClass('open');
+      } else {
+        return;
       }
+      $('.nav > .nav-link.open').removeClass('open');
+      $(`#nav-${formID}`).addClass('open');
     };
 
     this.forms.addChangeListener(() => this.saveFormLocal());
