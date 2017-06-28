@@ -127,9 +127,12 @@ export class Arrayfield extends Parentfield {
    */
   setValue(value) {
     this._children = [];
-    for (const [key, item] of Object.entries(value)) {
+    for (let [key, item] of Object.entries(value)) {
       const index = this.addChild();
       if (this.format === 'map') {
+        if (this.valueField) {
+          item = { [this.valueField]: item };
+        }
         item[this.keyField] = key;
       }
       this._children[index].setValue(item);
