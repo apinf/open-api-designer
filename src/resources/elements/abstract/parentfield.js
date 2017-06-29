@@ -1,4 +1,4 @@
-import {Collapsiblefield} from './collapsiblefield';
+import {Collapsiblefield} from './collapsiblefield'
 
 /**
  * Parentfield is a {@link Field} with children.
@@ -8,13 +8,13 @@ export class Parentfield extends Collapsiblefield {
    * The internal storage for the children of this field.
    * @private
    */
-  _children;
+  _children
   /**
    * Whether or not to automatically collapse other fields when uncollapsing a
    * field.
    * @type {Boolean}
    */
-  collapseManagement = false;
+  collapseManagement = false
 
   /**
    * Get the children of this field as an array.
@@ -22,14 +22,14 @@ export class Parentfield extends Collapsiblefield {
    * @return {Field[]} The children of this field.
    */
   get iterableChildren() {
-    return Object.values(this._children);
+    return Object.values(this._children)
   }
 
   /**
    * Get the children of this field, in whatever format they implementation uses.
    */
   get children() {
-    return this._children;
+    return this._children
   }
 
   /**
@@ -38,7 +38,7 @@ export class Parentfield extends Collapsiblefield {
    * @return {Field}            The child, or undefined if not found.
    */
   getChild(id) {
-    return this._children[id];
+    return this._children[id]
   }
 
   /**
@@ -48,7 +48,7 @@ export class Parentfield extends Collapsiblefield {
    * @return {Boolean}          Whether or not this field has the child.
    */
   hasChild(id) {
-    return this._children.hasOwnProperty(id);
+    return this._children.hasOwnProperty(id)
   }
 
   /**
@@ -57,21 +57,21 @@ export class Parentfield extends Collapsiblefield {
    * @param  {String|Number} id The ID or index of the child.
    */
   deleteChild(id) {
-    delete this._children[id];
+    delete this._children[id]
   }
 
   /** @inheritdoc */
   resolvePath(path) {
-    const parentResolveResult = super.resolvePath(path);
+    const parentResolveResult = super.resolvePath(path)
     if (parentResolveResult) {
-      return parentResolveResult;
+      return parentResolveResult
     }
 
-    const elem = this._children[path[0]];
+    const elem = this._children[path[0]]
     if (elem) {
-      return elem.resolvePath(path.splice(1));
+      return elem.resolvePath(path.splice(1))
     }
-    return undefined;
+    return undefined
   }
 
   /**
@@ -83,9 +83,9 @@ export class Parentfield extends Collapsiblefield {
   init(id = '', args = {}) {
     args = Object.assign({
       collapseManagement: false
-    }, args);
-    this.collapseManagement = args.collapseManagement;
-    return super.init(id, args);
+    }, args)
+    this.collapseManagement = args.collapseManagement
+    return super.init(id, args)
   }
 
   /**
@@ -97,7 +97,7 @@ export class Parentfield extends Collapsiblefield {
     if (!isNowCollapsed && this.collapseManagement) {
       for (const child of this._children) {
         if (child !== field) {
-          child.setCollapsed(true);
+          child.setCollapsed(true)
         }
       }
     }

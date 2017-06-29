@@ -1,5 +1,5 @@
-import {containerless} from 'aurelia-framework';
-import {Field} from './abstract/field';
+import {containerless} from 'aurelia-framework'
+import {Field} from './abstract/field'
 
 /**
  * LazyLinkfield is a field that lazily proxies the a whole field (value & UI)
@@ -7,26 +7,26 @@ import {Field} from './abstract/field';
  */
 @containerless
 export class LazyLinkfield extends Field {
-  static TYPE = 'lazylink';
-  target = '#';
-  overrides = {};
-  child = undefined;
-  cachedValue = undefined;
+  static TYPE = 'lazylink'
+  target = '#'
+  overrides = {}
+  child = undefined
+  cachedValue = undefined
 
   /** @inheritdoc */
   init(id = '', args = {}) {
-    this.target = args.target || '#';
-    this.overrides = args.overrides || {};
-    return super.init(id, args);
+    this.target = args.target || '#'
+    this.overrides = args.overrides || {}
+    return super.init(id, args)
   }
 
   /** @inheritdoc */
   get i18nPath() {
-    const target = this.resolveRef(this.target);
+    const target = this.resolveRef(this.target)
     if (!target) {
-      return this.parent.i18nPath;
+      return this.parent.i18nPath
     }
-    return target.i18nPath;
+    return target.i18nPath
   }
 
   /**
@@ -34,9 +34,9 @@ export class LazyLinkfield extends Field {
    */
   isEmpty() {
     if (!this.child) {
-      return true;
+      return true
     }
-    return this.child.isEmpty();
+    return this.child.isEmpty()
   }
 
   /**
@@ -45,31 +45,31 @@ export class LazyLinkfield extends Field {
    * This doesn't return anything, since it just sets the {@link #child} field.
    */
   createChild() {
-    this.child = this.resolveRef(this.target).clone(this);
+    this.child = this.resolveRef(this.target).clone(this)
     for (const [field, value] of Object.entries(this.overrides)) {
-      let target;
-      let fieldPath;
+      let target
+      let fieldPath
       if (field.includes(';')) {
-        let elementPath;
-        [elementPath, fieldPath] = field.split(';');
-        fieldPath = fieldPath.split('/');
-        target = this.child.resolveRef(elementPath);
+        let elementPath
+        ;[elementPath, fieldPath] = field.split(';')
+        fieldPath = fieldPath.split('/')
+        target = this.child.resolveRef(elementPath)
       } else {
-        fieldPath = field.split('/');
-        target = this.child;
+        fieldPath = field.split('/')
+        target = this.child
       }
-      const lastFieldPathEntry = fieldPath.splice(-1)[0];
-      target = this.resolveRawPath(target, fieldPath);
+      const lastFieldPathEntry = fieldPath.splice(-1)[0]
+      target = this.resolveRawPath(target, fieldPath)
       if (value === null) {
-        delete target[lastFieldPathEntry];
+        delete target[lastFieldPathEntry]
       } else {
-        target[lastFieldPathEntry] = value;
+        target[lastFieldPathEntry] = value
       }
     }
     // Use cached value if it has been set.
     if (this.cachedValue) {
-      this.child.setValue(this.cachedValue);
-      this.cachedValue = undefined;
+      this.child.setValue(this.cachedValue)
+      this.cachedValue = undefined
     }
   }
 
@@ -78,18 +78,18 @@ export class LazyLinkfield extends Field {
    */
   resolveRawPath(object, path) {
     if (path.length === 0) {
-      return object;
+      return object
     } else if (path[0] === '#') {
-      return this.resolveRawPath(object, path.splice(1));
+      return this.resolveRawPath(object, path.splice(1))
     }
-    return this.resolveRawPath(object[path[0]], path.splice(1));
+    return this.resolveRawPath(object[path[0]], path.splice(1))
   }
 
   /**
    * Delete the current child.
    */
   deleteChild() {
-    this.child = undefined;
+    this.child = undefined
   }
 
   /** @inheritdoc */
@@ -100,15 +100,15 @@ export class LazyLinkfield extends Field {
     // When this field appears, the child will be generated. When the field dis-
     // appears, the child will be deleted. This is what makes this link field
     // lazy.
-    const display = super.shouldDisplay();
+    const display = super.shouldDisplay()
     if (display) {
       if (this.child === undefined) {
-        this.createChild();
+        this.createChild()
       }
     } else if (this.child !== undefined) {
-      this.deleteChild();
+      this.deleteChild()
     }
-    return display;
+    return display
   }
 
   /**
@@ -118,15 +118,15 @@ export class LazyLinkfield extends Field {
    * @param {Object} value The new value to set to the target field.
    */
   setValue(value) {
-    this.onSetValue(value);
+    this.onSetValue(value)
     if (!this.child) {
       // Caching values helps when using setValue() in a big form. By caching
       // the values, we won't lose setValue data due to dependencies of this
       // field not getting their value set before this field.
-      this.cachedValue = value;
-      return;
+      this.cachedValue = value
+      return
     }
-    this.child.setValue(value);
+    this.child.setValue(value)
   }
 
 
@@ -138,20 +138,20 @@ export class LazyLinkfield extends Field {
    *                  {@link #resolveTarget} returns {@linkplain undefined}.
    */
   getValue() {
-    return this.child ? this.child.getValue() : undefined;
+    return this.child ? this.child.getValue() : undefined
   }
 
   resolvePath(path) {
-    const parentResolveResult = super.resolvePath(path);
+    const parentResolveResult = super.resolvePath(path)
     if (parentResolveResult) {
-      return parentResolveResult;
+      return parentResolveResult
     }
 
     // If the child exists and the next path piece to be resolved targets the
     // child, continue recursing from the child.
     if (this.child && path[0] === ':child') {
-      return this.child.resolvePath(path.splice(1));
+      return this.child.resolvePath(path.splice(1))
     }
-    return undefined;
+    return undefined
   }
 }

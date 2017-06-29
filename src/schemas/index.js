@@ -1,11 +1,11 @@
-import {header} from './header';
-import {mime} from './mime';
-import {security} from './security';
-import {tags} from './tags';
-import {paths} from './paths';
-import {types, enumItem} from './types';
-import {parameters, parameterItemDefinition} from './parameters';
-import {responses} from './responses';
+import {header} from './header'
+import {mime} from './mime'
+import {security} from './security'
+import {tags} from './tags'
+import {paths} from './paths'
+import {types, enumItem} from './types'
+import {parameters, parameterItemDefinition} from './parameters'
+import {responses} from './responses'
 
 export const fieldsToShow = {
   'header': [
@@ -19,10 +19,10 @@ export const fieldsToShow = {
   'global-definitions': ['definitions', 'parameters', 'responses'],
   'mime': ['consumes', 'produces'],
   'global-security': ['security', 'securityDefinitions']
-};
+}
 
-const hiddenParameterItemDefinition = Object.assign({}, parameterItemDefinition);
-hiddenParameterItemDefinition.showValueInParent = false;
+const hiddenParameterItemDefinition = Object.assign({}, parameterItemDefinition)
+hiddenParameterItemDefinition.showValueInParent = false
 
 export const schema = {
   'type': 'object',
@@ -95,4 +95,4 @@ export const schema = {
       'target': '/mime/produces'
     }
   }
-};
+}

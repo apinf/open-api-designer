@@ -13,12 +13,12 @@ const mimeTypeArray = {
       'text/html'
     ]
   }
-};
+}
 
-export const consumes = Object.assign({}, mimeTypeArray);
-consumes.i18n.path = 'form.mime.consumes';
-export const produces = Object.assign({}, mimeTypeArray);
-produces.i18n.path = 'form.mime.produces';
+export const consumes = Object.assign({}, mimeTypeArray)
+consumes.i18n.path = 'form.mime.consumes'
+export const produces = Object.assign({}, mimeTypeArray)
+produces.i18n.path = 'form.mime.produces'
 
 export const mime = {
   'type': 'object',
@@ -28,4 +28,4 @@ export const mime = {
     'consumes': consumes,
     'produces': produces
   }
-};
+}

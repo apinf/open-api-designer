@@ -20,35 +20,35 @@ export class Field {
    * The ID of the field. Not displayed to the user directly.
    * @type {String}
    */
-  id = '';
+  id = ''
   /**
    * The display and/or output format of the field. The field implementation may
    * or may not ignore this.
    * @type {String}
    */
-  format = '';
+  format = ''
   /**
    * The number of columns this element should use.
    * @type {Number}
    */
-  columns = 8;
+  columns = 8
   /**
    * The conditions on which to display this field.
    * @type {String}
    */
-  conditions = {};
+  conditions = {}
   /**
    * The index of this element within the parent. This should only be defined if
    * the parent stores children using numerical indexes. For object-like child
    * storage, the {@link #id} field should be used instead.
    * @type {Number}
    */
-  index = undefined;
+  index = undefined
   /**
    * The parent of this field.
    * @type {Field}
    */
-  parent = undefined;
+  parent = undefined
   /**
    * Whether or not the parent should include the value of this field in its
    * value. Useful to set to false when using {@link Linkfield}s
@@ -97,17 +97,17 @@ export class Field {
    */
   get i18nPath() {
     if (this.i18n.path) {
-      return this.i18n.path;
+      return this.i18n.path
     } else if (!this.i18n.cachedPath) {
       if (!this.parent) {
-        this.i18n.cachedPath = this.id;
+        this.i18n.cachedPath = this.id
       } else if (this.parent.type === 'array') {
-        this.i18n.cachedPath = `${this.parent.i18nPath}.item`;
+        this.i18n.cachedPath = `${this.parent.i18nPath}.item`
       } else {
-        this.i18n.cachedPath = `${this.parent.i18nPath}.${this.id}`;
+        this.i18n.cachedPath = `${this.parent.i18nPath}.${this.id}`
       }
     }
-    return this.i18n.cachedPath;
+    return this.i18n.cachedPath
   }
 
   /**
@@ -121,25 +121,25 @@ export class Field {
    */
   localize(fieldName, defaultValue) {
     if (!fieldName) {
-      fieldName = 'label';
+      fieldName = 'label'
     }
     if (!this.localizations.hasOwnProperty(fieldName)) {
-      let path;
+      let path
       if (fieldName.includes('/')) {
-        path = fieldName.substr(fieldName.indexOf('/') + 1);
+        path = fieldName.substr(fieldName.indexOf('/') + 1)
       } else if (this.i18n.keys.hasOwnProperty(fieldName)) {
-        path = this.i18n.keys[fieldName];
+        path = this.i18n.keys[fieldName]
       } else {
-        path = `${this.i18nPath}.${fieldName}`;
+        path = `${this.i18nPath}.${fieldName}`
       }
-      let translation = Field.internationalizer.tr(path, this.i18n.interpolations);
+      let translation = Field.internationalizer.tr(path, this.i18n.interpolations)
       if (!translation || (typeof defaultValue === 'string' && translation === path)) {
-        translation = defaultValue;
+        translation = defaultValue
       }
-      this.localizations[fieldName] = translation;
-      return translation;
+      this.localizations[fieldName] = translation
+      return translation
     }
-    return this.localizations[fieldName];
+    return this.localizations[fieldName]
   }
 
   /**
@@ -176,26 +176,26 @@ export class Field {
       hideValueIfEmpty: true,
       setValueListeners: [],
       i18n: {}
-    }, args);
+    }, args)
     args.i18n = Object.assign({
       path: '',
       keys: {},
       interpolations: {}
-    }, args.i18n);
-    Field.eventAggregator.subscribe('i18n:locale:changed', () => this.localizations = {});
-    this.id = id;
-    this.format = args.format;
-    this.conditions = args.conditions;
-    this.columns = args.columns;
-    this.index = args.index;
-    this.parent = args.parent;
-    this.showValueInParent = args.showValueInParent;
-    this.hideValueIfEmpty = args.hideValueIfEmpty;
-    this.setValueListeners = args.setValueListeners;
-    this.i18n = args.i18n;
-    this.i18n.interpolations.index = '$index';
-    this.type = this.constructor.TYPE;
-    return this;
+    }, args.i18n)
+    Field.eventAggregator.subscribe('i18n:locale:changed', () => this.localizations = {})
+    this.id = id
+    this.format = args.format
+    this.conditions = args.conditions
+    this.columns = args.columns
+    this.index = args.index
+    this.parent = args.parent
+    this.showValueInParent = args.showValueInParent
+    this.hideValueIfEmpty = args.hideValueIfEmpty
+    this.setValueListeners = args.setValueListeners
+    this.i18n = args.i18n
+    this.i18n.interpolations.index = '$index'
+    this.type = this.constructor.TYPE
+    return this
   }
 
   /**
@@ -203,23 +203,23 @@ export class Field {
    * implementations should override this.
    */
   isEmpty() {
-    return true;
+    return true
   }
   /**
    * Recursively get an unique identifier for this field.
    */
   get path() {
     if (!this.parent) {
-      return this.id;
+      return this.id
     }
-    return `${this.parent.path}.${this.id}`;
+    return `${this.parent.path}.${this.id}`
   }
 
   /**
    * Getter for {@link shouldDisplay}
    */
   get display() {
-    return this.shouldDisplay();
+    return this.shouldDisplay()
   }
 
   /**
@@ -227,23 +227,23 @@ export class Field {
    */
   shouldDisplay() {
     for (const [path, value] of Object.entries(this.conditions)) {
-      const elem = this.resolveRef(path);
+      const elem = this.resolveRef(path)
 
       if (!elem) {
-        return false;
+        return false
       }
 
-      const elemValue = elem.getValue();
+      const elemValue = elem.getValue()
 
       if (Array.isArray(value)) {
         if (!value.includes(elemValue)) {
-          return false;
+          return false
         }
       } else if (value !== elemValue) {
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
   /**
@@ -252,21 +252,21 @@ export class Field {
    * @return {String} The label to display.
    */
   get label() {
-    let label = this.localize('label');
+    let label = this.localize('label')
     if (!label) {
-      return '';
+      return ''
     } else if (!label.includes('$')) {
-      return label;
+      return label
     }
 
-    return this.formatReferencePlusField(this.formatIndex(label));
+    return this.formatReferencePlusField(this.formatIndex(label))
   }
 
   /**
    * Get the help text for this field.
    */
   get helpText() {
-    return this.localize('helpText', '');
+    return this.localize('helpText', '')
   }
 
   /**
@@ -275,7 +275,7 @@ export class Field {
    * @return {String}        The string with all the occurences replaced.
    */
   formatIndex(string) {
-    return string.replace(Field.MATCH_INDEX, this.index + 1);
+    return string.replace(Field.MATCH_INDEX, this.index + 1)
   }
 
   /**
@@ -286,17 +286,17 @@ export class Field {
    */
   formatReferencePlusField(string) {
     return string.replace(Field.MATCH_REFERENCE_PLUS_FIELD, (match, path, _, field) => {
-      const elem = this.resolveRef(path);
+      const elem = this.resolveRef(path)
       if (elem !== undefined) {
         if (field !== undefined) {
-          return elem.getFieldValue(field);
+          return elem.getFieldValue(field)
         }
         // Field name not specified, return the value of the form field.
-        return elem.getValue();
+        return elem.getValue()
       }
       // Form field not found.
-      return '';
-    });
+      return ''
+    })
   }
 
   /**
@@ -307,15 +307,15 @@ export class Field {
    */
   getFieldValue(name) {
     if (name === undefined) {
-      return undefined;
+      return undefined
     }
 
     if (name.endsWith('()')) {
       // Field name specified with braces, so call the field as a function.
-      return this[name.substr(0, name.length - 2)]();
+      return this[name.substr(0, name.length - 2)]()
     }
     // Field name specified without braces, so just get the value of that field.
-    return this[name];
+    return this[name]
   }
 
   /**
@@ -325,7 +325,7 @@ export class Field {
    * @return {Field}      The field at the path, or undefined if not found.
    */
   resolveRef(ref) {
-    return this.resolvePath(ref.split('/'));
+    return this.resolvePath(ref.split('/'))
   }
 
   /**
@@ -336,15 +336,15 @@ export class Field {
    */
   resolvePath(path) {
     if (path.length === 0) {
-      return this;
+      return this
     } else if (path[0] === '.' || path[0] === '#') {
-      return this.resolvePath(path.splice(1));
+      return this.resolvePath(path.splice(1))
     } else if (path[0] === '..') {
-      return this.parent.resolvePath(path.splice(1));
+      return this.parent.resolvePath(path.splice(1))
     } else if (path[0].length === 0) {
-      return this.superParent().resolvePath(path.splice(1));
+      return this.superParent().resolvePath(path.splice(1))
     }
-    return undefined;
+    return undefined
   }
 
   /**
@@ -354,9 +354,9 @@ export class Field {
    */
   superParent() {
     if (this.parent) {
-      return this.parent.superParent();
+      return this.parent.superParent()
     }
-    return this;
+    return this
   }
 
   /**
@@ -364,7 +364,7 @@ export class Field {
    */
   delete() {
     if (this.parent) {
-      this.parent.deleteChild(typeof this.index === 'number' ? this.index : this.id);
+      this.parent.deleteChild(typeof this.index === 'number' ? this.index : this.id)
     }
   }
 
@@ -374,7 +374,7 @@ export class Field {
    * @return {Object} The value of this field.
    */
   getValue() {
-    return undefined;
+    return undefined
   }
 
   /**
@@ -389,13 +389,13 @@ export class Field {
    * @param  {Field} field The field that changed.
    */
   onChange(field) {
-    field = field || this;
+    field = field || this
     if (this.parent) {
-      this.parent.onChange(field);
+      this.parent.onChange(field)
     }
 
     for (const listener of this.changeListeners) {
-      listener(field);
+      listener(field)
     }
   }
 
@@ -405,7 +405,7 @@ export class Field {
    * @param {Function} func The callback function.
    */
   addChangeListener(func) {
-    this.changeListeners.push(func);
+    this.changeListeners.push(func)
   }
 
   /**
@@ -414,7 +414,7 @@ export class Field {
   onSetValue(newValue) {
     for (const listener of this.setValueListeners) {
       if (typeof listener === 'function') {
-        listener(this, newValue);
+        listener(this, newValue)
       }
     }
   }
@@ -424,7 +424,7 @@ export class Field {
    * @param {Function} func The callback function.
    */
   addSetValueListener(func) {
-    this.setValueListeners.push(func);
+    this.setValueListeners.push(func)
   }
 
   /**
@@ -434,13 +434,13 @@ export class Field {
    * @return {Field} A deep clone of this field.
    */
   clone(parent) {
-    const ExtendedClass = Object.getPrototypeOf(this).constructor;
-    const clone = new ExtendedClass();
-    clone.init(this.id, this);
+    const ExtendedClass = Object.getPrototypeOf(this).constructor
+    const clone = new ExtendedClass()
+    clone.init(this.id, this)
     if (parent) {
-      clone.parent = parent;
+      clone.parent = parent
     }
-    return clone;
+    return clone
   }
 
   // Functions implemented in Collapsiblefield.

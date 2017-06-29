@@ -1,3 +1,3 @@
 export function configure(config) {
-  config.globalResources(['./elements/tooltip']);
+  config.globalResources(['./elements/tooltip'])
 }

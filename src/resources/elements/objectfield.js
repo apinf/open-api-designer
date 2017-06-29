@@ -1,5 +1,5 @@
-import {containerless} from 'aurelia-framework';
-import {Parentfield} from './abstract/parentfield';
+import {containerless} from 'aurelia-framework'
+import {Parentfield} from './abstract/parentfield'
 
 /**
  * Objectfield is a {@link Parentfield} that has children. The child fields are
@@ -7,25 +7,25 @@ import {Parentfield} from './abstract/parentfield';
  */
 @containerless
 export class Objectfield extends Parentfield {
-  static TYPE = 'object';
+  static TYPE = 'object'
   /** @inheritdoc */
-  _children = {};
+  _children = {}
   /**
    * The fields to display in the legend slot of the form.
    */
-  legendChildren = undefined;
+  legendChildren = undefined
   /**
    * The child that is currently open in the tabbed view.
    * @type {Field}
    */
-  activeChild = undefined;
+  activeChild = undefined
 
   /** @inheritdoc */
   init(id = '', args = {}) {
-    args = Object.assign({children: {}, legendChildren: undefined}, args);
-    this._children = args.children;
-    this.legendChildren = args.legendChildren;
-    return super.init(id, args);
+    args = Object.assign({children: {}, legendChildren: undefined}, args)
+    this._children = args.children
+    this.legendChildren = args.legendChildren
+    return super.init(id, args)
   }
 
   /**
@@ -38,7 +38,7 @@ export class Objectfield extends Parentfield {
       // Are there no active tabs?
       if ($(this.tabs).find('.tab-link.open').length === 0) {
         // Then activate the first tab.
-        this.switchTab(this.iterableChildren[0]);
+        this.switchTab(this.iterableChildren[0])
       }
     }
   }
@@ -50,10 +50,10 @@ export class Objectfield extends Parentfield {
   isEmpty() {
     for (const child of Object.values(this.allChildren)) {
       if (!child.isEmpty()) {
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
   /**
@@ -62,31 +62,31 @@ export class Objectfield extends Parentfield {
    *                  IDs of the children.
    */
   getValue() {
-    const value = {};
+    const value = {}
     for (const [key, field] of Object.entries(this.allChildren)) {
       if (!field || !field.showValueInParent || !field.display) {
-        continue;
+        continue
       } else if (field.isEmpty() && field.hideValueIfEmpty) {
-        continue;
+        continue
       }
-      value[key] = field.getValue();
+      value[key] = field.getValue()
     }
-    return value;
+    return value
   }
 
   /** @inheritdoc */
   get allChildren() {
-    return Object.assign({}, this.legendChildren, this._children);
+    return Object.assign({}, this.legendChildren, this._children)
   }
 
   /** @inheritdoc */
   get iterableLegendChildren() {
-    return this.legendChildren ? Object.values(this.legendChildren) : [];
+    return this.legendChildren ? Object.values(this.legendChildren) : []
   }
 
   /** @inheritdoc */
   get hasLegend() {
-    return this.legendChildren && this.iterableLegendChildren.length > 0;
+    return this.legendChildren && this.iterableLegendChildren.length > 0
   }
 
   /**
@@ -96,12 +96,12 @@ export class Objectfield extends Parentfield {
    *                       as the object key.
    */
   setValue(value) {
-    this.onSetValue(value);
+    this.onSetValue(value)
     for (const [key, field] of Object.entries(value)) {
       if (this._children.hasOwnProperty(key)) {
-        this._children[key].setValue(field);
+        this._children[key].setValue(field)
       } else if (this.legendChildren && this.legendChildren.hasOwnProperty(key)) {
-        this.legendChildren[key].setValue(field);
+        this.legendChildren[key].setValue(field)
       }
     }
   }
@@ -111,8 +111,8 @@ export class Objectfield extends Parentfield {
    * @param {Field} child The child to add.
    */
   addChild(child) {
-    this._children[child.id] = child;
-    this.onChange(child);
+    this._children[child.id] = child
+    this.onChange(child)
   }
 
   /**
@@ -120,25 +120,25 @@ export class Objectfield extends Parentfield {
    * @param  {Field} toChild The child whose tab to switch to.
    */
   switchTab(toChild) {
-    this.activeChild = toChild;
-    const tabElem = $(`#tab-${toChild.path.replace(/\./g, '\\.')}`);
-    tabElem.parent().find('.tab-link.open').removeClass('open');
-    tabElem.addClass('open');
+    this.activeChild = toChild
+    const tabElem = $(`#tab-${toChild.path.replace(/\./g, '\\.')}`)
+    tabElem.parent().find('.tab-link.open').removeClass('open')
+    tabElem.addClass('open')
   }
 
   /** @inheritdoc */
   clone(parent) {
-    const clone = new Objectfield();
-    const clonedChildren = {};
+    const clone = new Objectfield()
+    const clonedChildren = {}
     for (const [key, field] of Object.entries(this._children)) {
-      clonedChildren[key] = field.clone(clone);
-      clonedChildren[key].parent = clone;
+      clonedChildren[key] = field.clone(clone)
+      clonedChildren[key].parent = clone
     }
-    const clonedLegendChildren = {};
+    const clonedLegendChildren = {}
     if (this.legendChildren) {
       for (const [key, field] of Object.entries(this.legendChildren)) {
-        clonedLegendChildren[key] = field.clone(clone);
-        clonedLegendChildren[key].parent = clone;
+        clonedLegendChildren[key] = field.clone(clone)
+        clonedLegendChildren[key].parent = clone
       }
     }
     clone.init(this.id, {
@@ -152,24 +152,24 @@ export class Objectfield extends Parentfield {
       i18n: this.i18n,
       children: clonedChildren,
       legendChildren: clonedLegendChildren
-    });
-    return clone;
+    })
+    return clone
   }
 
   /** @inheritdoc */
   resolvePath(path) {
-    const parentResolveResult = super.resolvePath(path);
+    const parentResolveResult = super.resolvePath(path)
     if (parentResolveResult) {
-      return parentResolveResult;
+      return parentResolveResult
     }
 
     if (this.hasLegend) {
-      const elem = this.legendChildren[path[0]];
+      const elem = this.legendChildren[path[0]]
       if (elem) {
-        return elem.resolvePath(path.splice(1));
+        return elem.resolvePath(path.splice(1))
       }
     }
-    return undefined;
+    return undefined
   }
 
   /**
@@ -179,8 +179,8 @@ export class Objectfield extends Parentfield {
    */
   getViewStrategy() {
     if (this.format === 'tabs') {
-      return 'resources/elements/objectfield-tabbed.html';
+      return 'resources/elements/objectfield-tabbed.html'
     }
-    return 'resources/elements/objectfield.html';
+    return 'resources/elements/objectfield.html'
   }
 }

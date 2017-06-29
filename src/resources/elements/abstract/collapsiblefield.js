@@ -1,4 +1,4 @@
-import {Field} from './field';
+import {Field} from './field'
 
 /**
  * Collapsiblefield is a {@link Field} that can be collapsed. Usually
@@ -9,11 +9,11 @@ export class Collapsiblefield extends Field {
    * Whether or not the UI element should be collapsed (i.e. only show the title)
    * @type {Boolean}
    */
-  collapsed = false;
+  collapsed = false
   /**
    * Whether or not collapsing this field should be allowed.
    */
-  isCollapsible = true;
+  isCollapsible = true
 
   /**
    * Called when a child of this field changes its collapsed status.
@@ -26,7 +26,7 @@ export class Collapsiblefield extends Field {
    * Toggle the collapse status of this field.
    */
   toggleCollapse() {
-    this.setCollapsed(!this.collapsed);
+    this.setCollapsed(!this.collapsed)
   }
 
   /**
@@ -34,9 +34,9 @@ export class Collapsiblefield extends Field {
    */
   setCollapsed(collapsed) {
     if (this.isCollapsible) {
-      this.collapsed = collapsed;
+      this.collapsed = collapsed
       if (this.parent) {
-        this.parent.childCollapseChanged(this, this.collapsed);
+        this.parent.childCollapseChanged(this, this.collapsed)
       }
     }
   }
@@ -52,9 +52,9 @@ export class Collapsiblefield extends Field {
     args = Object.assign({
       collapsed: false,
       isCollapsible: true
-    }, args);
-    this.collapsed = args.collapsed;
-    this.isCollapsible = args.isCollapsible;
-    return super.init(id, args);
+    }, args)
+    this.collapsed = args.collapsed
+    this.isCollapsible = args.isCollapsible
+    return super.init(id, args)
   }
 }

@@ -34,7 +34,7 @@ export const securityRequirements = {
       }
     }
   }
-};
+}
 
 const securityDefinitions = {
   'type': 'array',
@@ -123,7 +123,7 @@ const securityDefinitions = {
       }
     }
   }
-};
+}
 
 export const security = {
   'type': 'object',
@@ -134,4 +134,4 @@ export const security = {
     definitions: securityDefinitions,
     requirements: securityRequirements
   }
-};
+}

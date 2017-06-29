@@ -1,29 +1,29 @@
-import {noView} from 'aurelia-framework';
-import {Field} from './abstract/field';
+import {noView} from 'aurelia-framework'
+import {Field} from './abstract/field'
 
 /**
  * Linkfield is a field that proxies the value from another field.
  */
 @noView
 export class Linkfield extends Field {
-  static TYPE = 'link';
+  static TYPE = 'link'
   /**
    * The target field from which to get the value. If the target refers to this
    * field, the value will be {@linkplain undefined}
    * @type {String}
    */
-  target = '#';
+  target = '#'
   /**
    * Whether or not this field has a view. {@link Linkfield}s don't have a view,
    * so this is hardcoded to false.
    * @type {Boolean}
    */
-  noView = true;
+  noView = true
 
   /** @inheritdoc */
   init(id = '', args = {}) {
-    this.target = args.target || '#';
-    return super.init(id, args);
+    this.target = args.target || '#'
+    return super.init(id, args)
   }
 
   /**
@@ -31,11 +31,11 @@ export class Linkfield extends Field {
    * target is empty.
    */
   isEmpty() {
-    const field = this.resolveTarget();
+    const field = this.resolveTarget()
     if (!field) {
-      return true;
+      return true
     }
-    return field.isEmpty();
+    return field.isEmpty()
   }
 
   /**
@@ -45,29 +45,29 @@ export class Linkfield extends Field {
    *                 {@linkplain undefined}.
    */
   resolveTarget() {
-    const field = this.resolveRef(this.target);
+    const field = this.resolveRef(this.target)
     if (!field || field === this) {
-      return undefined;
+      return undefined
     }
-    return field;
+    return field
   }
 
   /** @inheritdoc */
   resolvePath(path) {
-    const parentResolveResult = super.resolvePath(path);
+    const parentResolveResult = super.resolvePath(path)
     if (parentResolveResult) {
-      return parentResolveResult;
+      return parentResolveResult
     }
 
     // If the target exists and the next path piece to be resolved targets the
     // target, continue recursing from the target.
     if (path[0] === ':target') {
-      const target = this.resolveTarget();
+      const target = this.resolveTarget()
       if (target) {
-        return target.resolvePath(path.splice(1));
+        return target.resolvePath(path.splice(1))
       }
     }
-    return undefined;
+    return undefined
   }
 
   /**
@@ -77,9 +77,9 @@ export class Linkfield extends Field {
    * @param {Object} value The new value to set to the target field.
    */
   setValue(value) {
-    const field = this.resolveTarget();
+    const field = this.resolveTarget()
     if (field) {
-      field.setValue(value);
+      field.setValue(value)
     }
   }
 
@@ -92,7 +92,7 @@ export class Linkfield extends Field {
    *                  {@link #resolveTarget} returns {@linkplain undefined}.
    */
   getValue() {
-    const field = this.resolveTarget();
-    return field ? field.getValue() : undefined;
+    const field = this.resolveTarget()
+    return field ? field.getValue() : undefined
   }
 }
