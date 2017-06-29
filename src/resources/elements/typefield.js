@@ -1,6 +1,6 @@
-import {containerless, bindable} from 'aurelia-framework';
-import {Collapsiblefield} from './abstract/collapsiblefield';
-import {parseJSON} from '../jsonparser';
+import {containerless, bindable} from 'aurelia-framework'
+import {Collapsiblefield} from './abstract/collapsiblefield'
+import {parseJSON} from '../jsonparser'
 
 /**
  * Typefield is a {@link Field} that shows different child forms depending on
@@ -11,42 +11,42 @@ import {parseJSON} from '../jsonparser';
  */
 @containerless
 export class Typefield extends Collapsiblefield {
-  static TYPE = 'selectable';
+  static TYPE = 'selectable'
   /**
    * The type that is currently selected.
    * @type {String}
    */
-  @bindable selectedType = '';
+  @bindable selectedType = ''
   /**
    * The key where to put the value of the child field to in the output of this
    * field.
    * @type {String}
    */
-  valueKey = '';
+  valueKey = ''
   /**
    * The key where to put the key of this field ({@link #key}) in the output of
    * this field.
    * @type {String}
    */
-  keyKey = '';
+  keyKey = ''
   /**
    * The current key of this field. Exists as a legend field in the form if
    * {@link #keyKey} is defined.
    * @type {String}
    */
   @bindable
-  key = '';
+  key = ''
   /**
    * The UI placeholder for the key form field.
    * @type {String}
    */
-  keyPlaceholder = '';
+  keyPlaceholder = ''
   /**
    * The key where to put the type of this field in the output of this field.
    * The default is {@linkplain x-oad-type} so it won't break the OpenAPI spec.
    * @type {String}
    */
-  typeKey = 'x-oad-type';
+  typeKey = 'x-oad-type'
   /**
    * Whether or not to copy the value over to the new child when switching types.
    *
@@ -55,18 +55,18 @@ export class Typefield extends Collapsiblefield {
    * the same places.
    * @type {Boolean}
    */
-  copyValue = false;
+  copyValue = false
   /**
    * The current child field.
    * @type {Field}
    * @private
    */
-  child = undefined;
+  child = undefined
   /**
    * The schemas for the available types.
    * @type {Object}
    */
-  types = {};
+  types = {}
 
   /**
    * @inheritdoc
@@ -92,16 +92,16 @@ export class Typefield extends Collapsiblefield {
       keyPlaceholder: 'Object key...',
       copyValue: false,
       types: { 'null': { 'type': 'text' } }
-    }, args);
-    this.types = args.types;
-    this.valueKey = args.valueKey;
-    this.typeKey = args.typeKey;
-    this.keyKey = args.keyKey;
-    this.keyPlaceholder = args.keyPlaceholder;
-    this.copyValue = args.copyValue;
-    this.defaultType = args.defaultType;
-    this.setType(args.defaultType || Object.keys(this.types)[0]);
-    return super.init(id, args);
+    }, args)
+    this.types = args.types
+    this.valueKey = args.valueKey
+    this.typeKey = args.typeKey
+    this.keyKey = args.keyKey
+    this.keyPlaceholder = args.keyPlaceholder
+    this.copyValue = args.copyValue
+    this.defaultType = args.defaultType
+    this.setType(args.defaultType || Object.keys(this.types)[0])
+    return super.init(id, args)
   }
 
   /**
@@ -109,11 +109,11 @@ export class Typefield extends Collapsiblefield {
    */
   isEmpty() {
     if (this.key.length !== 0) {
-      return false;
+      return false
     } else if (!this.child) {
-      return true;
+      return true
     }
-    return this.child.isEmpty();
+    return this.child.isEmpty()
   }
 
   /**
@@ -121,22 +121,22 @@ export class Typefield extends Collapsiblefield {
    * @param {String} newType The new type.
    */
   selectedTypeChanged(newType) {
-    const newSchema = this.types[newType];
-    const value = this.copyValue ? this.getValue() : undefined;
-    let newChild;
+    const newSchema = this.types[newType]
+    const value = this.copyValue ? this.getValue() : undefined
+    let newChild
     if (newSchema.hasOwnProperty('$ref')) {
-      newChild = this.resolveRef(newSchema.$ref).clone();
+      newChild = this.resolveRef(newSchema.$ref).clone()
     } else {
-      newChild = parseJSON(newType, JSON.parse(JSON.stringify(newSchema)));
+      newChild = parseJSON(newType, JSON.parse(JSON.stringify(newSchema)))
     }
     if (newChild) {
-      newChild.parent = this;
+      newChild.parent = this
       if (value) {
-        this.setValue(value);
+        this.setValue(value)
       }
-      this.child = newChild;
+      this.child = newChild
     }
-    this.onChange();
+    this.onChange()
   }
 
   /**
@@ -163,13 +163,13 @@ export class Typefield extends Collapsiblefield {
    */
   getValue() {
     if (!this.child) {
-      return undefined;
+      return undefined
     }
 
-    let value = this.child.getValue();
+    let value = this.child.getValue()
     // True if the value of the child is either not an object or is an array.
     // In other words, can/should we put named fields in the value directly?
-    const valueIsNotObject = typeof value !== 'object' || Array.isArray(value);
+    const valueIsNotObject = typeof value !== 'object' || Array.isArray(value)
     // If valueKey is set, the value of the child should always be stored in an
     // object with valueKey as the key for the value of the child.
     //
@@ -177,18 +177,18 @@ export class Typefield extends Collapsiblefield {
     // typeKey is set, the above should be done regardless of whether or not
     // valueKey is set.
     if (this.valueKey || (valueIsNotObject && (this.keyKey || this.typeKey))) {
-      const valueKey = this.valueKey || 'value';
+      const valueKey = this.valueKey || 'value'
       value = {
         [valueKey]: value
-      };
+      }
     }
     if (this.keyKey) {
-      value[this.keyKey] = this.key;
+      value[this.keyKey] = this.key
     }
     if (this.typeKey) {
-      value[this.typeKey] = this.selectedType;
+      value[this.typeKey] = this.selectedType
     }
-    return value;
+    return value
   }
 
   /**
@@ -197,27 +197,27 @@ export class Typefield extends Collapsiblefield {
    * @param {Object} value The value to set to this field.
    */
   setValue(value) {
-    this.onSetValue(value);
+    this.onSetValue(value)
     // If the key is available in the given value object, get the key from there
     // and delete the field (from the value object) it was stored in.
     if (this.keyKey && value.hasOwnProperty(this.keyKey)) {
-      this.key = value[this.keyKey];
-      delete value[this.keyKey];
+      this.key = value[this.keyKey]
+      delete value[this.keyKey]
     }
     // Do the same for the type
     if (this.typeKey && value.hasOwnProperty(this.typeKey)) {
-      this.setType(value[this.typeKey]);
-      delete value[this.typeKey];
+      this.setType(value[this.typeKey])
+      delete value[this.typeKey]
     }
     // Try to reverse getValue() in a reliable way.
     // Currently this looks at whether or not valueKey is set and also the type
     // of the object found with valueKey.
-    const valueInValueKey = value[this.valueKey || 'value'];
-    const valueIsNotObject = typeof valueInValueKey === 'object' && !Array.isArray(valueInValueKey);
+    const valueInValueKey = value[this.valueKey || 'value']
+    const valueIsNotObject = typeof valueInValueKey === 'object' && !Array.isArray(valueInValueKey)
     if (this.valueKey || ((this.typeKey || this.keyKey) && valueIsNotObject)) {
-      this.child.setValue(valueInValueKey);
+      this.child.setValue(valueInValueKey)
     } else {
-      this.child.setValue(value);
+      this.child.setValue(value)
     }
   }
 
@@ -226,37 +226,37 @@ export class Typefield extends Collapsiblefield {
    * Used to trigger {@link #onChange}.
    */
   keyChanged() {
-    this.onChange();
+    this.onChange()
   }
 
   /**
    * Set the selected type.
    */
   setType(type) {
-    this.selectedType = type;
-    this.selectedTypeChanged(type);
+    this.selectedType = type
+    this.selectedTypeChanged(type)
   }
 
   /**
    * Get the currently selected type name.
    */
   getType() {
-    return this.selectedType;
+    return this.selectedType
   }
 
   /** @inheritdoc */
   resolvePath(path) {
-    const parentResolveResult = super.resolvePath(path);
+    const parentResolveResult = super.resolvePath(path)
     if (parentResolveResult) {
-      return parentResolveResult;
+      return parentResolveResult
     }
 
     // If the child exists and the next path piece to be resolved targets the
     // child, continue recursing from the child.
     if (this.child && path[0] === ':child') {
-      return this.child.resolvePath(path.splice(1));
+      return this.child.resolvePath(path.splice(1))
     }
-    return undefined;
+    return undefined
   }
 
   /**
@@ -264,6 +264,6 @@ export class Typefield extends Collapsiblefield {
    * @return {String[]} The names of the possible types.
    */
   get possibleTypes() {
-    return Object.keys(this.types);
+    return Object.keys(this.types)
   }
 }

@@ -57,17 +57,17 @@ export const response = {
       }
     }
   }
-};
+}
 
-const namedResponse = $.extend(true, {}, response);
-namedResponse.keyKey = 'responseName';
-namedResponse.keyPlaceholder = 'Enter name...';
+const namedResponse = $.extend(true, {}, response)
+namedResponse.keyKey = 'responseName'
+namedResponse.keyPlaceholder = 'Enter name...'
 namedResponse.i18n.interpolations = {
   'name': '${#:key}'
-};
+}
 namedResponse.i18n.keys = {
   'label': 'form.global-definitions.responses.item.label'
-};
+}
 
 export const responses = {
   'type': 'array',
@@ -78,4 +78,4 @@ export const responses = {
   'keyField': 'responseName',
   'newItemText': 'New Response',
   'item': namedResponse
-};
+}

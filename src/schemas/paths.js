@@ -1,8 +1,8 @@
-import {consumes, produces} from './mime';
-import {schemes} from './schemes';
-import {securityRequirements} from './security';
-import {response} from './responses';
-import {parameter} from './parameters';
+import {consumes, produces} from './mime'
+import {schemes} from './schemes'
+import {securityRequirements} from './security'
+import {response} from './responses'
+import {parameter} from './parameters'
 
 const operationChildren = {
   'operationId': {
@@ -84,7 +84,7 @@ const operationChildren = {
     'newItemText': 'New Parameter',
     'item': parameter
   }
-};
+}
 
 export const paths = {
   'type': 'array',
@@ -238,4 +238,4 @@ export const paths = {
       }
     }
   }
-};
+}

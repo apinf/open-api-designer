@@ -69,14 +69,14 @@ export const typeFormatChoices = [
       '../type': 'string'
     }
   }
-];
+]
 
 // I18n config to make the label blank.
 const blankLabel = {
   'keys': {
     'label': 'blank'
   }
-};
+}
 
 export const enumItem = {
   'type': 'selectable',
@@ -122,7 +122,7 @@ export const enumItem = {
       'i18n': blankLabel
     }
   }
-};
+}
 
 export const enumArray = {
   'type': 'array',
@@ -131,12 +131,12 @@ export const enumArray = {
   },
   'hideValueIfEmpty': true,
   'item': enumItem
-};
+}
 
-const enumIfHasType = Object.assign({}, enumArray);
+const enumIfHasType = Object.assign({}, enumArray)
 enumIfHasType.conditions = {
   '../x-oad-type': ['string', 'integer', 'boolean', 'number', 'array', 'object', 'null']
-};
+}
 
 export const types = {
   'type': 'array',
@@ -155,9 +155,9 @@ export const types = {
     'setValueListeners': [
       (field, newValue) => {
         if (newValue.hasOwnProperty('$ref')) {
-          field.legendChildren['x-oad-type'].setValue('reference');
+          field.legendChildren['x-oad-type'].setValue('reference')
         } else if (newValue.hasOwnProperty('type')) {
-          field.legendChildren['x-oad-type'].setValue(newValue.type);
+          field.legendChildren['x-oad-type'].setValue(newValue.type)
         }
       }
     ],
@@ -284,4 +284,4 @@ export const types = {
       }
     }
   }
-};
+}

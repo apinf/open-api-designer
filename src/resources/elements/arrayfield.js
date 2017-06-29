@@ -1,37 +1,37 @@
-import {containerless} from 'aurelia-framework';
-import {Parentfield} from './abstract/parentfield';
-import {Field} from './abstract/field';
+import {containerless} from 'aurelia-framework'
+import {Parentfield} from './abstract/parentfield'
+import {Field} from './abstract/field'
 
 /**
  * Arrayfield is a {@link Parentfield} that has a variable number of the same kind of child.
  */
 @containerless
 export class Arrayfield extends Parentfield {
-  static TYPE = 'array';
+  static TYPE = 'array'
   /**
    * The base object that is cloned whenever a new child is added.
    * @type {Field}
    */
-  item;
+  item
   /**
    * The field that is used as the key if {@link #format} is {@linkplain map}
    * @type {String}
    */
-  keyField = '_key';
+  keyField = '_key'
   /**
    * The field that is used as the value if {@link #format} is {@linkplain map}
    * This field is optional. By default, the whole value will be used as-is.
    * @type {String}
    */
-  valueField = undefined;
+  valueField = undefined
   /**
    * Whether or not to add {@linkplain #<index>} to the end of the labels of
    * children.
    * @type {Boolean}
    */
-  addIndexToChildLabel = true;
+  addIndexToChildLabel = true
   /** @inheritdoc */
-  _children = [];
+  _children = []
 
   /**
    * @inheritdoc
@@ -50,12 +50,12 @@ export class Arrayfield extends Parentfield {
       keyField: '_key',
       valueField: undefined,
       addIndexToChildLabel: true
-    }, args);
-    this.item = args.item;
-    this.keyField = args.keyField;
-    this.valueField = args.valueField;
-    this.addIndexToChildLabel = args.addIndexToChildLabel;
-    return super.init(id, args);
+    }, args)
+    this.item = args.item
+    this.keyField = args.keyField
+    this.valueField = args.valueField
+    this.addIndexToChildLabel = args.addIndexToChildLabel
+    return super.init(id, args)
   }
 
   /**
@@ -64,8 +64,8 @@ export class Arrayfield extends Parentfield {
    * @return {String} The localized text.
    */
   get newItemText() {
-    const defaultNewText = `New ${this.item.label}`;
-    return this.localize('newItemText', defaultNewText);
+    const defaultNewText = `New ${this.item.label}`
+    return this.localize('newItemText', defaultNewText)
   }
 
   /**
@@ -76,10 +76,10 @@ export class Arrayfield extends Parentfield {
     for (const child of this._children) {
       if (!child.isEmpty()) {
         // This field is not empty if any of the children is not empty.
-        return false;
+        return false
       }
     }
-    return true;
+    return true
   }
 
   /**
@@ -88,36 +88,36 @@ export class Arrayfield extends Parentfield {
    *                           format specified by {@link #format}.
    */
   getValue() {
-    let value = undefined;
+    let value = undefined
     if (this.format === 'map') {
-      value = {};
+      value = {}
       for (const item of this._children) {
         if (!item.showValueInParent || !item.display) {
-          continue;
+          continue
         } else if (item.isEmpty() && item.hideValueIfEmpty) {
-          continue;
+          continue
         }
-        const data = item.getValue();
-        const key = data[this.keyField];
+        const data = item.getValue()
+        const key = data[this.keyField]
         if (this.valueField) {
-          value[key] = data[this.valueField];
+          value[key] = data[this.valueField]
         } else {
-          delete data[this.keyField];
-          value[key] = data;
+          delete data[this.keyField]
+          value[key] = data
         }
       }
     } else if (this.format === 'array') {
-      value = [];
+      value = []
       for (const [index, item] of Object.entries(this._children)) {
         if (!item.showValueInParent || !item.display) {
-          continue;
+          continue
         } else if (item.isEmpty() && item.hideValueIfEmpty) {
-          continue;
+          continue
         }
-        value[index] = item.getValue();
+        value[index] = item.getValue()
       }
     }
-    return value;
+    return value
   }
 
   /**
@@ -126,17 +126,17 @@ export class Arrayfield extends Parentfield {
    *                                {@link #format}.
    */
   setValue(value) {
-    this.onSetValue(value);
-    this._children = [];
+    this.onSetValue(value)
+    this._children = []
     for (let [key, item] of Object.entries(value)) {
-      const index = this.addChild();
+      const index = this.addChild()
       if (this.format === 'map') {
         if (this.valueField) {
-          item = { [this.valueField]: item };
+          item = { [this.valueField]: item }
         }
-        item[this.keyField] = key;
+        item[this.keyField] = key
       }
-      this._children[index].setValue(item);
+      this._children[index].setValue(item)
     }
   }
 
@@ -145,21 +145,21 @@ export class Arrayfield extends Parentfield {
    */
   addChild() {
     if (!(this.item instanceof Field)) {
-      return;
+      return
     }
 
-    const field = this.item.clone(this);
-    field.index = this._children.length;
-    field.id = `${this.item.id}-${field.index}`;
+    const field = this.item.clone(this)
+    field.index = this._children.length
+    field.id = `${this.item.id}-${field.index}`
     if (this.addIndexToChildLabel) {
-      field.labelFormat = `${field.labelFormat} #$index`;
+      field.labelFormat = `${field.labelFormat} #$index`
     }
-    this._children.push(field);
+    this._children.push(field)
     if (this.collapseManagement) {
-      field.setCollapsed(false);
+      field.setCollapsed(false)
     }
-    this.onChange(field);
-    return field.index;
+    this.onChange(field)
+    return field.index
   }
 
   /**
@@ -170,60 +170,60 @@ export class Arrayfield extends Parentfield {
    */
   deleteChild(index) {
     if (this._children.length === 0) {
-      return;
+      return
     }
 
-    this._children.splice(index, 1);
+    this._children.splice(index, 1)
     for (let i = index; i < this._children.length; i++) {
-      const item = this._children[i];
-      item.index = i;
+      const item = this._children[i]
+      item.index = i
     }
-    this.onChange();
+    this.onChange()
   }
 
   /** @inheritdoc */
   clone(parent) {
-    const clone = new Arrayfield();
-    clone.init(this.id, this);
+    const clone = new Arrayfield()
+    clone.init(this.id, this)
     if (parent) {
-      clone.parent = parent;
+      clone.parent = parent
     }
     if (this.item instanceof Field) {
-      clone.item = this.item.clone();
+      clone.item = this.item.clone()
     }
-    return clone;
+    return clone
   }
 
   /** @inheritdoc */
   resolvePath(path) {
-    const parentResolveResult = super.resolvePath(path);
+    const parentResolveResult = super.resolvePath(path)
     if (parentResolveResult) {
-      return parentResolveResult;
+      return parentResolveResult
     }
 
     if (this.format === 'map') {
       // Matches `fieldName(expectedValue)`
       // First capture group: Field name
       // Second capture group: Expected value of given field.
-      const match = (/([a-zA-Z0-9]+)\((.+?)\)/g).exec(path[0]);
+      const match = (/([a-zA-Z0-9]+)\((.+?)\)/g).exec(path[0])
       if (match) {
         // Match found, loop through children to find a child that has the
         // expected value in the given field.
 
         // Result unpacking: first element is the whole match and the remaining
         // elements are capture group results.
-        const [, fieldName, expectedValue] = match;
+        const [, fieldName, expectedValue] = match
         for (const child of this._children) {
           if (child.getValue()[fieldName] === expectedValue) {
-            return child.resolvePath(path.splice(1));
+            return child.resolvePath(path.splice(1))
           }
         }
       }
     }
 
     if (path[0] === ':item') {
-      return this.item.resolvePath(path.splice(1));
+      return this.item.resolvePath(path.splice(1))
     }
-    return undefined;
+    return undefined
   }
 }

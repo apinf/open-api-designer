@@ -10,4 +10,4 @@ export const schemes = {
     }
   },
   'choices': ['http', 'https', 'ws', 'wss']
-};
+}

@@ -1,4 +1,4 @@
-import {externalDocs} from './externalDocs';
+import {externalDocs} from './externalDocs'
 
 export const tags = {
   'type': 'array',
@@ -16,4 +16,4 @@ export const tags = {
       'externalDocs': externalDocs
     }
   }
-};
+}

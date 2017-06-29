@@ -14,4 +14,4 @@ export const externalDocs = {
       'hideValueIfEmpty': false
     }
   }
-};
+}

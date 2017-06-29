@@ -1,5 +1,5 @@
-import {schemes} from './schemes';
-import {externalDocs} from './externalDocs';
+import {schemes} from './schemes'
+import {externalDocs} from './externalDocs'
 
 export const header = {
   'type': 'object',
@@ -78,4 +78,4 @@ export const header = {
     },
     'externalDocs': externalDocs
   }
-};
+}

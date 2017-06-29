@@ -1,4 +1,4 @@
-import {typeFormatChoices, enumArray} from './types';
+import {typeFormatChoices, enumArray} from './types'
 
 const parameterType = {
   'type': 'option',
@@ -6,18 +6,18 @@ const parameterType = {
   'placeholder': 'Type name',
   'format': 'dropdown',
   'choices': ['string', 'integer', 'number', 'boolean', 'array']
-};
+}
 
-const toplevelParameterType = JSON.parse(JSON.stringify(parameterType));
+const toplevelParameterType = JSON.parse(JSON.stringify(parameterType))
 toplevelParameterType.conditions = {
   '../in': ['path', 'query', 'header', 'formData']
-};
+}
 toplevelParameterType.choices.push({
   'key': 'file',
   'conditions': {
     '../in': 'formData'
   }
-});
+})
 
 const parameterFormat = {
   'type': 'option',
@@ -26,12 +26,12 @@ const parameterFormat = {
   'i18n': {
     'path': 'form.types.item.format'
   }
-};
+}
 
-const toplevelParameterFormat = JSON.parse(JSON.stringify(parameterFormat));
+const toplevelParameterFormat = JSON.parse(JSON.stringify(parameterFormat))
 toplevelParameterFormat.conditions = {
   '../in': ['path', 'query', 'header', 'formData']
-};
+}
 
 const parameterCollectionFormat = {
   'type': 'option',
@@ -41,17 +41,17 @@ const parameterCollectionFormat = {
   'conditions': {
     '../type': 'array'
   }
-};
+}
 
-const toplevelParameterCollectionFormat = JSON.parse(JSON.stringify(parameterCollectionFormat));
-toplevelParameterCollectionFormat.conditions['../type'] = 'array';
+const toplevelParameterCollectionFormat = JSON.parse(JSON.stringify(parameterCollectionFormat))
+toplevelParameterCollectionFormat.conditions['../type'] = 'array'
 toplevelParameterCollectionFormat.choices.push({
   'key': 'multi',
   'label': 'Parameter separation (foo=bar&foo=baz)',
   'conditions': [
     '../in': ['query', 'formData']
   ]
-});
+})
 
 export const parameterItemDefinition = {
   'type': 'object',
@@ -74,18 +74,18 @@ export const parameterItemDefinition = {
       }
     }
   }
-};
+}
 
-const toplevelParameterItemDefinition = Object.assign({}, parameterItemDefinition);
+const toplevelParameterItemDefinition = Object.assign({}, parameterItemDefinition)
 toplevelParameterItemDefinition.conditions = {
   '../in': ['path', 'query', 'header', 'formData'],
   '../type': 'array'
-};
+}
 
-const enumIfNotInBody = Object.assign({}, enumArray);
+const enumIfNotInBody = Object.assign({}, enumArray)
 enumIfNotInBody.conditions = {
   '../in': ['path', 'query', 'header', 'formData']
-};
+}
 
 export const parameter = {
   'type': 'selectable',
@@ -107,7 +107,7 @@ export const parameter = {
       'setValueListeners': [
         (field, newValue) => {
           if (newValue.hasOwnProperty('in')) {
-            field.children.in.setValue(newValue.in);
+            field.children.in.setValue(newValue.in)
           }
         }
       ],
@@ -179,17 +179,17 @@ export const parameter = {
       }
     }
   }
-};
+}
 
-export const namedParameter = $.extend(true, {}, parameter);
-namedParameter.keyKey = 'paramName';
-namedParameter.keyPlaceholder = 'Enter name...';
+export const namedParameter = $.extend(true, {}, parameter)
+namedParameter.keyKey = 'paramName'
+namedParameter.keyPlaceholder = 'Enter name...'
 namedParameter.i18n.interpolations = {
   'name': '${#:key}'
-};
+}
 namedParameter.i18n.keys = {
   'label': 'form.global-definitions.parameters.item.label'
-};
+}
 
 export const parameters = {
   'type': 'array',
@@ -200,4 +200,4 @@ export const parameters = {
   'keyField': 'paramName',
   'newItemText': 'New Parameter',
   'item': namedParameter
-};
+}
